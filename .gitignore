@@ -1,6 +1,8 @@
 # GIT IGNORE TEMPLATE TAKEN FROM: 
 # https://github.com/github/gitignore/blob/main/Node.gitignore
 
+.DS_Store
+
 # Logs
 gs
 logs
