@@ -1,16 +1,17 @@
 import './navbar.css'
-
 import React from 'react'
+import logo from '../../../../../Tripinary/src/assets/Tripinary.png'
 
 const navbar = () => {
   return (
     <div className = 'navbar'>
-      <h1>Tripinary</h1>
 
-      <div className = "navigation">
-        <a className = "button" href = "#Home">Home</a>
-      </div>
-
+      <img src={logo} alt = "logo" className = 'logowrap'/>
+  
+        <ul className = "nav-links">
+           <li> <a href = "#"> Home </a> </li>
+        </ul>
+      
     </div>
   )
 }
