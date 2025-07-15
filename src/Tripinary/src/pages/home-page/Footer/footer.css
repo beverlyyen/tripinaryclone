@@ -1,0 +1,46 @@
+.footer-container{
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: top;
+    background-color: #1d4b1676;
+    color: black;
+    font-family: Arial;
+    padding: 2em;
+    width: 100%;
+
+    box-sizing:border-box;
+    overflow: hidden;
+   
+}
+
+.footer-section{
+    padding: 15px;
+    padding-top: 15px;
+}
+
+.footer-section h4{
+    margin-bottom: 0.5em;
+}
+
+.footer-section ul{
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.logowrap{
+    width: 145px; /* 726 x 0.2 = 145.2px (scale down to 20% its original) */
+    height: 96px; /* 478 x 0.2 = 95.6px */
+    
+}
+
+.footer-section img{
+  display: block;       /* makes the image respect margin auto */
+  margin: 0 auto;       /* centers the image horizontally */
+  max-width: 100%;  
+}
+
+
+
