@@ -1,0 +1,30 @@
+.tripinarymain{
+    
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #43633e20;  
+    padding: 2em;
+    align-items: center;
+    min-height: 80vh;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+
+   
+}
+
+.tripinarymain h1{
+    padding:10px;
+    margin-bottom: -5px;
+}
+
+.tripinarymain h4{
+    margin-top: 0;
+    color: #43633E;
+}
+
+.tripinarymain p{
+    margin: 0;
+    color: #43633ea3;
+}
