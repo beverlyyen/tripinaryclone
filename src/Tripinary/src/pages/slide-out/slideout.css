@@ -41,7 +41,6 @@
 .left-panel {
   flex: 1;
   min-width: 60%;
-  border-right: 1px solid black;
   padding: 15px;
 }
 
@@ -99,6 +98,7 @@
 }
 
 .star {
+  margin-top: -1rem;
   color: #5E8558;
 }
 
@@ -140,13 +140,27 @@
   background: white;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 15px;
+  padding: 10px;
   max-height: 350px; 
   color:black;
   margin-bottom: 80px;
   width: 100%
 }
 
+.review-card h4 {
+  margin-top: 10px;
+}
+
+.review-star {
+  margin-left: 0.55rem;
+  color: #5E8558;
+}
+
+.review-date {
+  color:gray;
+  opacity: 70%;
+  margin-top: -1rem;
+}
 .review-scroll {
   max-height: 270px; 
   overflow-y: auto;
@@ -155,7 +169,6 @@
 
 .review {
   border-bottom: 1px solid #eee;
-  padding: 10px 0;
 }
 
 

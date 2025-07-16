@@ -60,7 +60,7 @@ function SidePanel({ isOpen }) {
           <div className="info-card">  {/* use sfu loc for now*/}
             <div className="info-text">
               <h3>Simon Fraser University</h3>
-              <p>☆☆☆☆☆</p>  {/* put in revs from google api */}
+              <p className="star">☆☆☆☆☆</p>  {/* put in revs from google api */}
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
             </div>
             <div className="image-placeholder"><img src={duckImage}></img></div>
@@ -71,8 +71,8 @@ function SidePanel({ isOpen }) {
             <div className="review-scroll">
               {reviews.map((review, i) => (
                 <div className="review" key={i}>
-                  <p>{review.name}<span className="star">{'★'.repeat(review.stars)}{'☆'.repeat(5 - review.stars)}</span></p>
-                  <p>{review.date}</p>
+                  <p>{review.name}<span className="review-star">{'★'.repeat(review.stars)}{'☆'.repeat(5 - review.stars)}</span></p>
+                  <p className="review-date">{review.date}</p>
                   <p>{review.text}</p>
                 </div>
               ))}
