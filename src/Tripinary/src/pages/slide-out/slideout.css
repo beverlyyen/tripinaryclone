@@ -25,6 +25,8 @@
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
   z-index: 999;
   display: flex;
+  font-family: "Inter", sans-serif;
+
 }
 
 .side-panel-full.open {
@@ -40,7 +42,7 @@
 
 .left-panel {
   flex: 1;
-  min-width: 60%;
+  min-width: 55%;
   padding: 15px;
 }
 
