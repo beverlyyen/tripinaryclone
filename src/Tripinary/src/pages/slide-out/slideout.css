@@ -1,4 +1,8 @@
+html, body {
+ height:100%;
+  overflow: hidden;
 
+}
 
 .open-panel-btn {
   position: absolute;
@@ -66,22 +70,42 @@
   border-radius: 80px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #EBE6F0;
+  background-color: #5E8558;
 
 }
 
-.search-bar input {
+.search-button{
+  background-color: transparent;
+  background: none; 
+  border: none; 
+  padding: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px; 
+}
+
+.search-bar-input {
   flex: 1;
   border: none;
   outline: none;
   font-size: 14px;
   background-color: transparent;
+  color:white;
+  margin-left: 10px;
+}
+
+.search-bar-input::placeholder {
+  color:white;
 }
 
 .search-icon {
   margin-left: 8px;
 }
 
+.star {
+  color: #5E8558;
+}
 
 .info-card {
   display:flex;

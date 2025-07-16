@@ -45,7 +45,7 @@ function SidePanel({ isOpen }) {
       <div className="inner-panel">
         <div className="left-panel">
           <div className="search-bar">
-            <input type="text" placeholder="search places!!!" />
+            <input type="text" className="search-bar-input" placeholder="search places!!!" />
             <button type="button" className="search-button"><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
           </div>
           <iframe
@@ -71,7 +71,7 @@ function SidePanel({ isOpen }) {
             <div className="review-scroll">
               {reviews.map((review, i) => (
                 <div className="review" key={i}>
-                  <p>{review.name}{'★'.repeat(review.stars)}{'☆'.repeat(5 - review.stars)}</p>
+                  <p>{review.name}<span className="star">{'★'.repeat(review.stars)}{'☆'.repeat(5 - review.stars)}</span></p>
                   <p>{review.date}</p>
                   <p>{review.text}</p>
                 </div>
