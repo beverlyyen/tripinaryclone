@@ -36,18 +36,18 @@
   display: flex;
   height: 100%;
   width: 100%;
+  padding : 15px;
 }
 
 .left-panel {
   flex: 1;
   min-width: 60%;
   border-right: 1px solid black;
+  padding: 15px;
 }
 
 .right-panel {
-  flex: 1;
   padding: 20px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -63,9 +63,11 @@
   display: flex;
   align-items: center;
   border: 2px solid black;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 80px;
+  padding: 10px;
   margin-bottom: 10px;
+  background-color: #EBE6F0;
+
 }
 
 .search-bar input {
@@ -73,6 +75,7 @@
   border: none;
   outline: none;
   font-size: 14px;
+  background-color: transparent;
 }
 
 .search-icon {
@@ -93,7 +96,7 @@
 }
 
 .image-placeholder {
-  width: 12ev;
+  width: 60%;
   height: 9ev;
   background: #e0e0e0;
   display: flex;
@@ -122,6 +125,7 @@
   max-height: 350px; 
   color:black;
   margin-bottom: 80px;
+  width: 100%
 }
 
 .review-scroll {
