@@ -1,6 +1,7 @@
 import React from 'react';
 import './slideout.css';
 import duckImage from '../../pages/slide-out/duck.jpeg';
+import magnifierIcon from '../../pages/slide-out/search.png';
 
 
 function SidePanel({ isOpen }) {
@@ -45,13 +46,12 @@ function SidePanel({ isOpen }) {
         <div className="left-panel">
           <div className="search-bar">
             <input type="text" placeholder="search places!!!" />
-            <span className="search-icon">search</span>
+            <button type="button" className="search-button"><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
           </div>
           <iframe
             className="map-placeholder"
             src="https://maps.google.com/maps?q=Simon+Fraser+University&t=&z=13&ie=UTF8&iwloc=&output=embed"
             allowFullScreen
-            loading="lazy"
             title="Map"
           ></iframe>
         </div>
