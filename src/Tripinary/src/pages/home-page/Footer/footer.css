@@ -1,17 +1,14 @@
 .footer-container{
-    margin-top: 80px;
     display: flex;
     justify-content: space-evenly;
-    align-items: top;
     background-color: #1d4b1676;
     color: black;
     font-family: Arial;
     padding: 2em;
-    width: 100%;
-
-    box-sizing:border-box;
-    overflow: hidden;
-   
+    width: 100vw;
+    overflow-x: hidden;
+    margin:0;
+    box-sizing: border-box;
 }
 
 .footer-section{
