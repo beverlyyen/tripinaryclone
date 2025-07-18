@@ -1,0 +1,41 @@
+.activity_suggestions {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 75px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.activity_suggestions > h1 {
+  text-align: center;
+  font-weight: 200;
+}
+
+.activity_suggestions h1 span {
+  font-weight: 900;
+}
+
+.submit_area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  height: 40px;
+  padding: 30px;
+  border-top: solid;
+  border-width: 1px;
+  line-height: 40px;
+
+  background-color: white;
+}
+
+.submit_area > p {
+  margin-right: 30px;
+}
+

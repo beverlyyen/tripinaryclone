@@ -1,0 +1,45 @@
+.carousel-container {
+  margin-bottom: 40px;
+
+  /* border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: red; */
+}
+
+.carousel-container > h1 {
+  margin-left: 40px;
+  margin-bottom: 5px;
+}
+
+.carousel {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+
+.activity_card_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  /* border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: blue; */
+}
+
+.swiper-button-prev, .swiper-button-next {
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: #000; /* or any arrow color */
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+.swiper-button-next {
+  right: 10px;
+}

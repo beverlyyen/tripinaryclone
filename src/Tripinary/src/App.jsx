@@ -5,6 +5,8 @@ import TripinaryMain from './pages/home-page/TripinaryMain/TripinaryMain'
 
 
 
+import Activity_Suggestions from './pages/activity-suggestions/activity_suggestions'
+
 function App() {
 
   return (
