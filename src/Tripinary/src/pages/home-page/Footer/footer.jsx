@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className = "footer-container">
         <div className = "footer-section">
-            <h4>Contributors</h4>  
+            <h4>CONTRIBUTORS</h4>  
             <ul>
             <li>John Camino</li>
             <li>Lilian Pham</li>
@@ -15,27 +15,31 @@ const Footer = () => {
             </ul>
         </div>
 
+         <div className = "footer-section">
+            <h4>CONTACT US</h4>
+            <p></p>
+        </div>
+
         <div className = "footer-section">
-            <h4>Links</h4>
+            <h4>PROJECT LINKS</h4>
             <ul>
-            <li>GitHub</li>
+            <li>TRIPINARY GitHub</li>
             </ul>
         </div>
 
         <div className = "footer-section">
-            <h4>Date Last Modified</h4>
+            <h4>DATE LAST MODIFIED</h4>
             <ul>
             <li>August 01, 2025</li>
             </ul>
-
         </div>
 
         <div className = "footer-section">
-            <h4>Logo Designed by Beverly Yen</h4>
+            <h4>LOGO BY BEVERLY YEN</h4>
             <img src={logo} alt = "logo" className = 'logowrap'/>
-           
-
         </div>
+
+        
 
     </div>
   )
