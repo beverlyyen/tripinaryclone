@@ -1,0 +1,59 @@
+.day-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+    text-align: left;
+}
+
+.day-label {
+    min-width: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-right: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    position: relative;
+    padding-top: 10px;
+}
+
+.day-label::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 75px;
+    height: 100%;
+    width: 2px;
+    background-color: #e0e0e0;
+    border-radius: 1px;
+}
+
+.time-box {
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    border: 2px solid #56933c;
+    max-width: 1000px;
+}
+
+.time-box li {
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #555555e9;
+}
+
+.time-box li:last-child {
+    margin-bottom: 0;
+}
+.time-box ul {
+    list-style: none;
+}
+
+.time {
+    color: #539535;
+    font-weight: bold;
+    min-width: 60px;
+    display: inline-block;
+    margin-right: 10px;
+}
