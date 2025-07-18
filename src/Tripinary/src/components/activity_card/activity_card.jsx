@@ -1,20 +1,18 @@
 import React from "react"
 import "./activity_card.css"
-import Rating from 'react-rating'
 
-/*
-  How to Use:
+import { Rating, ThinRoundedStar } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
-    <Activity_card 
-      img={"test"}
-      title={"Botanist"}
-      desc={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non  placerat risus. Praesent orci libero, pharetra et pretium a, rutrum."}
-      rating={4.5}
-      price_lvl={4}
-    />
-*/
+function Activity_Card({img, title, desc, rating, price_level}) {
+  const priceLevels = {
+    PRICE_LEVEL_INEXPENSIVE: '$',
+    PRICE_LEVEL_MODERATE: '$$',
+    PRICE_LEVEL_EXPENSIVE: '$$$',
+    PRICE_LEVEL_VERY_EXPENSIVE: '$$$$'
+  };
 
-function Activity_card({img, title, desc, rating, price_lvl}) {
+  const getPriceLevel = (level) => priceLevels[level] || '';
 
   return (
     <div className={"activity_card"}>
@@ -25,29 +23,26 @@ function Activity_card({img, title, desc, rating, price_lvl}) {
       <div className="card_details">
         <h2>{title}</h2>
         <h3>{desc}</h3>
-        <div className="ratings_pricelvl">
+        <div className="ratings_pricelevel">
           <Rating
-            initialRating={rating}
-            readonly
-            emptySymbol={<span style={{ color: '#000', fontSize: 15, paddingLeft: 1, paddingRight: 1 }}>☆</span>}
-            fullSymbol={<span style={{ color: '#000', fontSize: 15, paddingLeft: 1, paddingRight: 1 }}>★</span>}
-            fractions={2} // allow half star ratings
+            className="ratings"
+            value={rating}
+            readOnly
+            itemStyles={{
+              itemShapes: ThinRoundedStar,
+              activeFillColor: '#000',
+              inactiveFillColor: '#fff',
+            }}
+            style={{
+              width: 100
+            }}
+          />
 
-          />
-          <Rating
-            initialRating={price_lvl}
-            readonly
-            emptySymbol={<span style={{ color: '#000', fontSize: 15, paddingLeft: 1, paddingRight: 1 }}>$</span>}
-            fullSymbol={<span style={{ color: '#000', fontSize: 15, paddingLeft: 1, paddingRight: 1  }}>$</span>}
-            fractions={1}
-          />
+          <p>{getPriceLevel(price_level)}</p>
         </div>
-        
       </div>
-
     </div>
   )
-
 }
 
-export default Activity_card;
+export default Activity_Card;
