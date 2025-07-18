@@ -4,12 +4,12 @@
     justify-content: space-between;
     top: 0;
     left: 0;
-    right: 0;
     color: #43633E;
     width: 100vw;
-    padding: 2em;
+    padding: 0.5em;
     box-sizing: border-box;
     position:fixed;
+    
 }
 
 
