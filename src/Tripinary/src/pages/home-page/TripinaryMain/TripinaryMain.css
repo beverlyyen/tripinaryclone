@@ -1,0 +1,129 @@
+.tripinarymain{
+    
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: #43633e20;  
+    padding: 2em;
+    align-items: center;
+    min-height: 80vh;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 45px;
+
+   
+}
+
+.tripinarymain h1{
+    padding:10px;
+    margin-bottom: -5px;
+    font-size: 50px
+}
+
+.tripinarymain h4{
+    margin-top: 0;
+    color: #43633E;
+}
+
+.tripinarymain p{
+    margin: 0;
+    color: #43633ebb;
+    padding: 3px;
+}
+
+.user-input{
+    display: flex;
+    margin-top: 25px;
+    
+}
+
+.city-input{
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: transparent;
+    color:#43633e;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+
+}
+
+.city-box{
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #43633e;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+.city-box h5{
+    margin: 5px;
+    justify-content: center; 
+    color: #43633e;
+    padding: 5px;
+}
+
+.number-box{
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #43633e;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+.number-box h5{
+    margin: 5px;
+    justify-content: center; 
+    color: #43633e;
+    padding: 5px;
+}
+
+.number-input{
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: transparent;
+    color:#43633e;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 110px;
+   
+}
+
+.drop-down{
+    color:#43633edf;
+    background-color: transparent;
+    margin-right: 5px;
+    flex: 1;
+    font-size: 14px;
+}
+
+.itinerary-button{
+    background-color: whitesmoke; 
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.enter-button{
+    color: #43633E;
+    background-color: whitesmoke;
+    border: 2px solid #43633e; 
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.enter-button:hover{
+    background-color: #43633e25;
+}
