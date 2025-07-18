@@ -4,7 +4,7 @@
     {
       "category": "Food & Drinks",
       "list": [
-        { "place_name": "Botanist", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "Botanist", "description": "Lorem ipsum...", "rating": 4.5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
         { "place_name": "Chambar", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
         { "place_name": "Meat & Bread", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
         { "place_name": "Miku", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },

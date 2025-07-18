@@ -16,7 +16,7 @@ function Activity_Carousel({ category, list }) {
       <h1>{category}</h1>
       <Swiper
         modules={[Navigation]}
-        spaceBetween={25}
+        spaceBetween={15}
         slidesPerView={5}
         navigation
         loop
