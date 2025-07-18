@@ -1,6 +1,6 @@
 import './navbar.css'
 import React from 'react'
-import logo from '../../../../../Tripinary/src/assets/Tripinary.png'
+import logo from '../../assets/Tripinary.png'
 
 const navbar = () => {
   return (

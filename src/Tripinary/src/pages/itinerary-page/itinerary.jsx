@@ -1,5 +1,5 @@
 import React from "react";
-import DayCard from "./day-card";
+import DayCard from "../../components/day_card/day_card";
 import "./itinerary.css";
 const itineraryData = {
     destination: "Vancouver",
