@@ -1,5 +1,5 @@
 import React from "react";
-import "./day-card.css";
+import "./day_card.css";
 
 export default function DayCard({ title, times, place }) {
     return (
