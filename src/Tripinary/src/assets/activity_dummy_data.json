@@ -1,62 +1,68 @@
-[
-  {
-    "category": "Food & Drinks",
-    "list": [
-      { "place_name": "Botanist", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
-      { "place_name": "Chambar", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
-      { "place_name": "Meat & Bread", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Miku", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Granville Island Brewing", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Jam Cafe", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Revolver", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_INEXPENSIVE" },
-      { "place_name": "The Naam", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Tuc Craft Kitchen", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Tacofino", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" }
-    ]
-  },
-  {
-    "category": "Attractions & Sightseeing",
-    "list": [
-      { "place_name": "Stanley Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
-      { "place_name": "Capilano Suspension Bridge", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
-      { "place_name": "Granville Island", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_INEXPENSIVE" },
-      { "place_name": "Vancouver Art Gallery", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Gastown Steam Clock", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
-      { "place_name": "Canada Place", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
-      { "place_name": "Science World", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Dr. Sun Yat-Sen Classical Chinese Garden", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Lynn Canyon Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
-      { "place_name": "Queen Elizabeth Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" }
-    ]
-  },
-  {
-    "category": "Activities & Recreation",
-    "list": [
-      { "place_name": "Grouse Mountain", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
-      { "place_name": "Kitsilano Beach", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
-      { "place_name": "Sea to Sky Gondola", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
-      { "place_name": "FlyOver Canada", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Rent a Bike at Stanley Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Kayaking in False Creek", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Vancouver Aquarium", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Bloedel Conservatory", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Hike the Grouse Grind", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
-      { "place_name": "Scenic Floatplane Tour", "description": "Lorem ipsum...", "rating": 5, "price_level": "" }
-    ]
-  },
-  {
-    "category": "Shopping",
-    "list": [
-      { "place_name": "Pacific Centre", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Robson Street", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Metropolis at Metrotown", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "Granville Island Public Market", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Lonsdale Quay Market", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Gastown", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "CF Richmond Centre", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
-      { "place_name": "McArthurGlen Designer Outlet", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Commercial Drive", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
-      { "place_name": "Main Street", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" }
-    ]
-  }
-]
+{
+  "destination": "Vancouver",
+  "suggestions": [
+    {
+      "category": "Food & Drinks",
+      "list": [
+        { "place_name": "Botanist", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "Chambar", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "Meat & Bread", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Miku", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Granville Island Brewing", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Jam Cafe", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Revolver", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_INEXPENSIVE" },
+        { "place_name": "The Naam", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Tuc Craft Kitchen", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Tacofino", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" }
+      ]
+    },
+    {
+      "category": "Attractions & Sightseeing",
+      "list": [
+        { "place_name": "Stanley Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
+        { "place_name": "Capilano Suspension Bridge", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "Granville Island", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_INEXPENSIVE" },
+        { "place_name": "Vancouver Art Gallery", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Gastown Steam Clock", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
+        { "place_name": "Canada Place", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
+        { "place_name": "Science World", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Dr. Sun Yat-Sen Classical Chinese Garden", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Lynn Canyon Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
+        { "place_name": "Queen Elizabeth Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "" }
+      ]
+    },
+    {
+      "category": "Activities & Recreation",
+      "list": [
+        { "place_name": "Grouse Mountain", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "Kitsilano Beach", "description": "Lorem ipsum...", "rating": 4, "price_level": "" },
+        { "place_name": "Sea to Sky Gondola", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_VERY_EXPENSIVE" },
+        { "place_name": "FlyOver Canada", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Rent a Bike at Stanley Park", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Kayaking in False Creek", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Vancouver Aquarium", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Bloedel Conservatory", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Hike the Grouse Grind", "description": "Lorem ipsum...", "rating": 5, "price_level": "" },
+        { "place_name": "Scenic Floatplane Tour", "description": "Lorem ipsum...", "rating": 5, "price_level": "" }
+      ]
+    },
+    {
+      "category": "Shopping",
+      "list": [
+        { "place_name": "Pacific Centre", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Robson Street", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Metropolis at Metrotown", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "Granville Island Public Market", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Lonsdale Quay Market", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Gastown", "description": "Lorem ipsum...", "rating": 5, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "CF Richmond Centre", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_EXPENSIVE" },
+        { "place_name": "McArthurGlen Designer Outlet", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Commercial Drive", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" },
+        { "place_name": "Main Street", "description": "Lorem ipsum...", "rating": 4, "price_level": "PRICE_LEVEL_MODERATE" }
+      ]
+    }
+  ]
+
+}
+
+
