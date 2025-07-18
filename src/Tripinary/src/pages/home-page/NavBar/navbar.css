@@ -1,0 +1,49 @@
+.navbar{
+    background-color:whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    color: #43633E;
+    width: 100vw;
+    padding: 0.5em;
+    box-sizing: border-box;
+    position:fixed;
+    
+}
+
+
+.logowrap{
+    width: 145px; /* 726 x 0.2 = 145.2px (scale down to 20% its original) */
+    height: 96px; /* 478 x 0.2 = 95.6px */
+    object-fit: contain;
+    
+    
+}
+
+/* Make ul elements align horizontally */
+.navbar ul{
+    list-style-type: none;
+    overflow: hidden;
+    display: flex;
+}
+
+
+
+.navbar a{
+    text-decoration: none;
+    padding: 15px;
+    font-size: 25px;
+    font-family: 'Arial';
+    text-decoration: none;
+    display:block;
+}
+
+/* on-click actions don't change the color of the navbar links */
+.navbar a,
+.navbar a:visited,
+.navbar a:hover,
+.navbar a:active {
+  color: #43633E;
+  text-decoration: none;
+}

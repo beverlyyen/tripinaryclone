@@ -1,25 +1,23 @@
-// import { useState } from 'react'
-// import Itinerary from './pages/itinerary-page/itinerary';
-
-// import './App.css'
-
-// function App() {
-
-// }
-
-// export default App
-
 import React from "react";
 import ItineraryPage from "./pages/itinerary-page/itinerary";
-import DayCard from "./pages/itinerary-page/day-card";
+import DayCard from "./pages/itinerary-page/day-card"; // Keep if DayCard is still used/needed directly in App.jsx, otherwise remove.
+
+import './App.css'
+import Navbar from './pages/home-page/NavBar/navbar'
+import Footer from './pages/home-page/Footer/footer'
+import TripinaryMain from './pages/home-page/TripinaryMain/TripinaryMain'
+
 
 function App() {
   return (
-    <div>
+    <>
+      <Navbar />
+      <TripinaryMain />
+      {/*ItineraryPage component */}
       <ItineraryPage/>
-    </div>
+      <Footer />
+    </>
   );
 }
 
 export default App;
-
