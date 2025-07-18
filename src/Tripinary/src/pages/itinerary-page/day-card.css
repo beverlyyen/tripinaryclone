@@ -1,76 +1,59 @@
-
 .day-row {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
     gap: 15px;
     text-align: left;
-    
-  }
-  
-  /* Day label with vertical separator */
-  .day-label {
+}
+
+.day-label {
     min-width: 40px;
     font-family: Arial, Helvetica, sans-serif;
-    text-align: right;
     padding-right: 30px;
     font-weight: bold;
     font-size: 20px;
     position: relative;
     padding-top: 10px;
-  }
-  
-  .day-label::after {
-    content: "";
+}
+
+.day-label::after {
     position: absolute;
     top: 0;
     right: 0;
+    left: 75px;
     height: 100%;
     width: 2px;
     background-color: #e0e0e0;
     border-radius: 1px;
-  }
-  
-  /* Box containing times and place */
-  .time-box {
+}
+
+.time-box {
     flex-grow: 1;
-    background-color: #fff; /* White background for the box */
-    border-radius: 8px; /* Slightly more rounded corners */
-    padding: 15px 20px; /* Increased padding inside the box */
-    border: 2px solid #6cbe45; /* Green border around the box */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
-}
-
-/* If you had a specific place name within the box, style it */
-.place-name {
-    font-weight: 600;
-    font-size: 17px;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.time-box ul {
-    margin: 0;
-    padding: 0; /* Remove default padding for ul */
-    list-style: none; /* Remove default list bullet points */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    border: 2px solid #56933c;
+    max-width: 1000px;
 }
 
 .time-box li {
-    margin-bottom: 8px; /* More space between list items */
+    margin-bottom: 12px;
     font-size: 16px;
-    line-height: 1.4; /* Improve readability */
-    color: #555; /* Slightly softer text color for description */
+    line-height: 1.4;
+    color: #555555e9;
 }
 
 .time-box li:last-child {
-    margin-bottom: 0; /* No margin on the last item */
+    margin-bottom: 0;
+}
+.time-box ul {
+    list-style: none;
 }
 
-/* Style for the time part (e.g., 08:00) */
 .time {
-    color: #6cbe45; /* The specific green color from the screenshot */
+    color: #539535;
     font-weight: bold;
-    min-width: 60px; /* Give it a fixed width to align text */
-    display: inline-block; /* Allows width to be set and helps alignment */
-    margin-right: 10px; /* Space between time and description */
+    min-width: 60px;
+    display: inline-block;
+    margin-right: 10px;
 }
