@@ -7,6 +7,7 @@ import ItineraryPage from "./pages/itinerary-page/itinerary";
 import './App.css'
 
 function App() {
+
   return (
     <>
       <Navbar />
@@ -15,7 +16,6 @@ function App() {
           <Route path="/itinerary" element={<ItineraryPage/>} />
         </Routes>
       <Footer />
-
     </>
   );
 }
