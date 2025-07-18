@@ -1,0 +1,177 @@
+
+
+.open-panel-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.side-panel-full {
+  position: fixed;
+  top: 0;
+  right: -90vw;
+  width: 80vw;
+  height: 100%;
+  background: white;
+  transition: right 0.3s ease-in-out;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  display: flex;
+  font-family: "Inter", sans-serif;
+
+}
+
+.side-panel-full.open {
+  right: 0;
+}
+
+.inner-panel {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding : 15px;
+}
+
+.left-panel {
+  flex: 1;
+  min-width: 55%;
+  padding: 15px;
+}
+
+.right-panel {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 80px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #5E8558;
+
+}
+
+.search-button{
+  background-color: transparent;
+  background: none; 
+  border: none; 
+  padding: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px; 
+}
+
+.search-bar-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background-color: transparent;
+  color:white;
+  margin-left: 10px;
+}
+
+.search-bar-input::placeholder {
+  color:white;
+}
+
+.search-icon {
+  margin-left: 8px;
+}
+
+.star {
+  margin-top: -1rem;
+  color: #5E8558;
+}
+
+.info-card {
+  display:flex;
+  height: 30%;
+  width: 100%;
+  color:black;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+
+.image-placeholder {
+  width: 60%;
+  height: 9ev;
+  background: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+}
+
+
+.info-text {
+  flex: 1;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.review-card {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  max-height: 350px; 
+  color:black;
+  margin-bottom: 80px;
+  width: 100%
+}
+
+.review-card h4 {
+  margin-top: 10px;
+}
+
+.review-star {
+  margin-left: 0.55rem;
+  color: #5E8558;
+}
+
+.review-date {
+  color:gray;
+  opacity: 70%;
+  margin-top: -1rem;
+}
+.review-scroll {
+  max-height: 270px; 
+  overflow-y: auto;
+  padding-right: 10px; 
+}
+
+.review {
+  border-bottom: 1px solid #eee;
+}
+
+
+
