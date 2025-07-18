@@ -7,6 +7,7 @@ const itineraryData = {
   days: [
     { day: "Day 1", items: ["08:00", "09:00", "10:00"] },
     { day: "Day 2", items: ["08:00", "09:00", "10:00"] },
+    { day: "Day 3", items: ["08:00", "09:00", "10:00"] },
   ],
 };
 
@@ -19,7 +20,7 @@ export default function Itinerary() {
       </div>
 
       {itineraryData.days.map((day, index) => (
-        <DayCard key={index} title={day.day} times={day.items} place={itineraryData.destination} />
+        <DayCard key={index} title={day.day} times={day.items} />
       ))}
 
       <div className="itinerary-button">
