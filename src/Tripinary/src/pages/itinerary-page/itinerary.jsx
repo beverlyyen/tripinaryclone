@@ -43,7 +43,6 @@ export default function Itinerary() {
         setIsSidePanelOpen(true);
     };
 
-    const handleCloseSidePanel = () => {
 
     return (
         <div className="itinerary-container">
