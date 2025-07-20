@@ -57,3 +57,13 @@
     display: inline-block;
     margin-right: 10px;
 }
+
+.time-box ul li {
+  transition: 0.15s;
+}
+.time-box ul li:hover {
+  transform: scale(1.03);
+  color: #5E8558;
+  text-shadow: 0 2px 2px rgba(25, 118, 210, 0.2);
+  cursor: pointer;
+}
