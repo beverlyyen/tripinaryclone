@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './slideout.css';
 import duckImage from '../../pages/slide-out/duck.jpeg';
 import magnifierIcon from '../../pages/slide-out/search.png';
 
 
-function SidePanel({ isOpen }) {
+function SidePanel({ isOpen, searchQuery, onClose }) {
+
+  const [searchInputValue, setSearchInputValue] = useState("");
+
+  useEffect(() => {
+    setSearchInputValue(searchQuery || "");
+  }, [searchQuery]);
 
   const reviews = [
     {
@@ -43,9 +49,10 @@ function SidePanel({ isOpen }) {
   return (
     <div className={`side-panel-full ${isOpen ? 'open' : ''}`}>
       <div className="inner-panel">
+        <button className="close-button" onClick={onClose}>&times;</button>
         <div className="left-panel">
           <div className="search-bar">
-            <input type="text" className="search-bar-input" placeholder="search places!!!" />
+            <input type="text" className="search-bar-input" placeholder="search places!!!" value={searchInputValue} onChange={e => setSearchInputValue(e.target.value)} ></input>
             <button type="button" className="search-button"><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
           </div>
           <iframe

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/navbar/navbar.jsx'
 import Footer from './components/footer/footer.jsx'
 import TripinaryMain from './pages/home-page/TripinaryMain.jsx'
-import ItineraryPage from "./pages/itinerary-page/itinerary";
+import ItineraryPage from "./pages/itinerary-page/itinerary.jsx";
 import './App.css'
 
 function App() {
