@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import DayCard from "../../components/day_card/day_card";
 import "./itinerary.css";
 import SidePanel from "../slide-out/slideout";
@@ -33,7 +33,7 @@ const itineraryData = {
     ],
 };
 
-export default function Itinerary() {
+function Itinerary() {
 
     const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -46,7 +46,7 @@ export default function Itinerary() {
 
     return (
         <div className="itinerary-container">
-            <SidePanel isOpen={isSidePanelOpen} onClose={handleCloseSidePanel} searchQuery={searchQuery} />
+            <SidePanel isOpen={isSidePanelOpen} searchQuery={searchQuery} onClose={() => setIsSidePanelOpen(false)} />
             <div className="itinerary-header">
                 <h1>Itinerary</h1>
                 <p>Trip to... {itineraryData.destination}</p>
@@ -68,3 +68,5 @@ export default function Itinerary() {
         </div>
     );
 }
+
+export default Itinerary;
