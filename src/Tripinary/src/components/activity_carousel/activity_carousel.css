@@ -8,8 +8,13 @@
 }
 
 .carousel-container > h1 {
-  margin-left: 40px;
-  margin-bottom: 5px;
+  margin: 0 0 10px 100px;
+}
+
+.carousel-wrapper {
+  padding: 0 100px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .carousel {

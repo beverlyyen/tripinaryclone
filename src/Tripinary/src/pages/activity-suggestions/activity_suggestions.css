@@ -1,9 +1,7 @@
 .activity_suggestions {
   display: flex;
   flex-direction: column;
-  margin-bottom: 75px;
-  padding-left: 200px;
-  padding-right: 200px;
+  background-color: #43633e20;  
 }
 
 .activity_suggestions > h1 {
@@ -16,12 +14,11 @@
 }
 
 .submit_area {
-  position: fixed;
+  /* position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-
+  z-index: 1000; */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
