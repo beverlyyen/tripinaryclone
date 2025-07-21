@@ -24,7 +24,7 @@ function SidePanel({ isOpen, searchQuery, onClose }) {
     const newLocation = "https://www.google.com/maps/embed/v1/place?key={APIKEY}&q=${encodedQuery}";
   }
 
-  const handleSearch = () => 
+  const handleSearch = () => {
   updateMapSource(searchInputValue);
 };
 
@@ -69,7 +69,7 @@ function SidePanel({ isOpen, searchQuery, onClose }) {
         <div className="left-panel">
           <div className="search-bar">
             <input type="text" className="search-bar-input" placeholder="search places!!!" value={searchInputValue} onChange={e => setSearchInputValue(e.target.value)} ></input>
-            <button type="button" className="search-button"><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
+            <button type="button" className="search-button" onClick={handleSearch}><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
           </div>
           <iframe
             className="map-placeholder"
