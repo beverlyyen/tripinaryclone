@@ -3,14 +3,30 @@ import './slideout.css';
 import duckImage from '../../pages/slide-out/duck.jpeg';
 import magnifierIcon from '../../pages/slide-out/search.png';
 
+const APIKEY = "AIzaSyDvngAm1nIHzp4Hc3lIIo9VpJDxKYUTvro";
+
 
 function SidePanel({ isOpen, searchQuery, onClose }) {
+
+  const [mapSource, setMapSource] = useState("");
 
   const [searchInputValue, setSearchInputValue] = useState("");
 
   useEffect(() => {
-    setSearchInputValue(searchQuery || "");
+      if (searchQuery) {
+      setSearchInputValue(searchQuery);
+      updateMapSource(searchQuery);
+    }
   }, [searchQuery]);
+
+  const updateMapSource = (query) => {
+    const encodedQuery = encodeURIComponent(query);
+    const newLocation = "https://www.google.com/maps/embed/v1/place?key={APIKEY}&q=${encodedQuery}";
+  }
+
+  const handleSearch = () => 
+  updateMapSource(searchInputValue);
+};
 
   const reviews = [
     {

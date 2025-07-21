@@ -35,6 +35,8 @@ const itineraryData = {
 
 function Itinerary() {
 
+    const [mapLocation, setupMapLocation] = useState("");
+
     const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
