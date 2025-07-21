@@ -1,32 +1,28 @@
-.tripinarymain{
-    
-    width: 100vw;
+.tripinarymain .form{
+    /* width: 100%; */
     display: flex;
     justify-content: center;
     background-color: #43633e20;  
     padding: 2em;
     align-items: center;
-    min-height: 80vh;
+    min-height: 75vh;
     box-sizing: border-box;
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 45px;
-
-   
 }
 
-.tripinarymain h1{
+.tripinarymain .form h1{
     padding:10px;
     margin-bottom: -5px;
     font-size: 50px
 }
 
-.tripinarymain h4{
+.tripinarymain .form h4{
     margin-top: 0;
     color: #43633E;
 }
 
-.tripinarymain p{
+.tripinarymain .form p{
     margin: 0;
     color: #43633ebb;
     padding: 3px;
@@ -35,7 +31,6 @@
 .user-input{
     display: flex;
     margin-top: 25px;
-    
 }
 
 .city-input{
