@@ -3,14 +3,31 @@ import './slideout.css';
 import duckImage from '../../pages/slide-out/duck.jpeg';
 import magnifierIcon from '../../pages/slide-out/search.png';
 
+const APIKEY = "AIzaSyDvngAm1nIHzp4Hc3lIIo9VpJDxKYUTvro";
+
 
 function SidePanel({ isOpen, searchQuery, onClose }) {
+
+  const [mapSource, setMapSource] = useState("");
 
   const [searchInputValue, setSearchInputValue] = useState("");
 
   useEffect(() => {
-    setSearchInputValue(searchQuery || "");
+      if (searchQuery) {
+      setSearchInputValue(searchQuery);
+      updateMapSource(searchQuery);
+    }
   }, [searchQuery]);
+
+  const updateMapSource = (query) => {
+  const encodedQuery = encodeURIComponent(query);
+  const newLocation = `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=${encodedQuery}`;
+  setMapSource(newLocation);
+  }
+
+  const handleSearch = () => {
+  updateMapSource(searchInputValue);
+};
 
   const reviews = [
     {
@@ -53,11 +70,11 @@ function SidePanel({ isOpen, searchQuery, onClose }) {
         <div className="left-panel">
           <div className="search-bar">
             <input type="text" className="search-bar-input" placeholder="search places!!!" value={searchInputValue} onChange={e => setSearchInputValue(e.target.value)} ></input>
-            <button type="button" className="search-button"><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
+            <button type="button" className="search-button" onClick={handleSearch}><img src={magnifierIcon} alt="Search" className="search-icon"></img></button>
           </div>
           <iframe
             className="map-placeholder"
-            src="https://maps.google.com/maps?q=Simon+Fraser+University&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src={mapSource || "https://maps.google.com/maps?q=Simon+Fraser+University&output=embed"}
             allowFullScreen
             title="Map"
           ></iframe>
