@@ -6,10 +6,13 @@ import magnifierIcon from "../../pages/slide-out/search.png";
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
 function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
+  // Use a dummy placeId if none is provided (Google Sydney office)
+  if (!placeId) {
+    placeId = "ChIJN1t_tDeuEmsRUsoyG83frY4";
+  }
+
   const [mapSource, setMapSource] = useState("");
-
   const [searchInputValue, setSearchInputValue] = useState("");
-
   const [placeDetails, setPlaceDetails] = useState(null);
 
   useEffect(() => {
@@ -139,19 +142,35 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
           <div className="review-card">
             <h4>User Reviews</h4>
             <div className="review-scroll">
-              {reviews.map((review, i) => (
-                <div className="review" key={i}>
-                  <p>
-                    {review.name}
-                    <span className="review-star">
-                      {"★".repeat(review.stars)}
-                      {"☆".repeat(5 - review.stars)}
-                    </span>
-                  </p>
-                  <p className="review-date">{review.date}</p>
-                  <p>{review.text}</p>
-                </div>
-              ))}
+              {(placeDetails && placeDetails.reviews)
+                ? placeDetails.reviews.map(function(review, i) {
+                    return (
+                      <div className="review" key={i}>
+                        <p>
+                          {review.author_name}
+                          <span className="review-star">
+                            {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
+                          </span>
+                        </p>
+                        <p className="review-date">{review.relative_time_description}</p>
+                        <p>{review.text}</p>
+                      </div>
+                    );
+                  })
+                : reviews.map(function(review, i) {
+                    return (
+                      <div className="review" key={i}>
+                        <p>
+                          {review.name}
+                          <span className="review-star">
+                            {"★".repeat(review.stars)}{"☆".repeat(5 - review.stars)}
+                          </span>
+                        </p>
+                        <p className="review-date">{review.date}</p>
+                        <p>{review.text}</p>
+                      </div>
+                    );
+                  })}
             </div>
           </div>
         </div>
