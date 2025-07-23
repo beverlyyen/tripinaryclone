@@ -130,7 +130,9 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
               </p>
             </div>
             <div className="image-placeholder">
-              <img src={duckImage}></img>
+              {(placeDetails && placeDetails.photos && placeDetails.photos.length > 0)
+                ? <img src={getPhotoUrl(placeDetails.photos[0].photo_reference)} alt="Place" />
+                : <img src={duckImage} alt="Default" />}
             </div>
           </div>
 
