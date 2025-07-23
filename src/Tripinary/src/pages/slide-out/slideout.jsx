@@ -3,7 +3,7 @@ import './slideout.css';
 import duckImage from '../../pages/slide-out/duck.jpeg';
 import magnifierIcon from '../../pages/slide-out/search.png';
 
-const APIKEY = "AIzaSyDvngAm1nIHzp4Hc3lIIo9VpJDxKYUTvro";
+const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
 
 function SidePanel({ isOpen, searchQuery, onClose }) {
