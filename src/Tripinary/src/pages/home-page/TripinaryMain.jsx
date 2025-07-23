@@ -2,10 +2,12 @@ import { React, useState } from 'react'
 import './TripinaryMain.css'
 import Activity_Suggestions from '../activity-suggestions/activity_suggestions'
 import { motion, AnimatePresence } from 'framer-motion'
+import Place_AutoComplete from '../../components/place_autocomplete/Place_Autocomplete'
 
 const TripinaryMain = () => {
   const [form, setForm] = useState("")
   const [clicked, setClick] = useState(false)
+  const [selectedPlace, setSelectedPlace] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -25,7 +27,11 @@ const TripinaryMain = () => {
           <div className = 'user-input'>
             <div className = 'city-box'>
               <h5>Destination</h5>
-              <input type= 'city' className= "city-input" placeholder = "Enter name of city" />
+              {/* <input type= 'city' className= "city-input" placeholder = "Enter name of city" /> */}
+              <Place_AutoComplete onPlaceSelected={(place) => {
+                setSelectedPlace(place);
+                console.log('Selected:', place);
+              }} />
             </div>
             <div className = 'number-box'>
               <h5>Trip Duration</h5>
