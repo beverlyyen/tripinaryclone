@@ -6,11 +6,13 @@ import magnifierIcon from '../../pages/slide-out/search.png';
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
 
-function SidePanel({ isOpen, searchQuery, onClose }) {
+function SidePanel({ isOpen, searchQuery, onClose , placeId }) {
 
   const [mapSource, setMapSource] = useState("");
 
   const [searchInputValue, setSearchInputValue] = useState("");
+
+  const [placeDetails, setPlaceDetails] = useState(null);
 
   useEffect(() => {
       if (searchQuery) {
