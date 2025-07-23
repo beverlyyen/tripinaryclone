@@ -4,17 +4,26 @@ import Activity_Suggestions from '../activity-suggestions/activity_suggestions'
 import { motion, AnimatePresence } from 'framer-motion'
 import Place_AutoComplete from '../../components/place_autocomplete/Place_Autocomplete'
 
+const formObject = {
+  "place" : null,
+  "hours" : null
+}
+
+
 const TripinaryMain = () => {
-  const [form, setForm] = useState("")
   const [clicked, setClick] = useState(false)
-  const [selectedPlace, setSelectedPlace] = useState("");
+
+  const [form, setForm] = useState(formObject)
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setClick(true)
 
-    // console.log(e)
-
+    // update form once destination and trip duration is picked
+    form.place = selectedPlace
+    form.hours = 5
+    console.log(form)
   }
   return (
     <div className = 'tripinarymain'>
@@ -30,7 +39,6 @@ const TripinaryMain = () => {
               {/* <input type= 'city' className= "city-input" placeholder = "Enter name of city" /> */}
               <Place_AutoComplete onPlaceSelected={(place) => {
                 setSelectedPlace(place);
-                console.log('Selected:', place);
               }} />
             </div>
             <div className = 'number-box'>
