@@ -20,8 +20,9 @@ function SidePanel({ isOpen, searchQuery, onClose }) {
   }, [searchQuery]);
 
   const updateMapSource = (query) => {
-    const encodedQuery = encodeURIComponent(query);
-    const newLocation = "https://www.google.com/maps/embed/v1/place?key={APIKEY}&q=${encodedQuery}";
+  const encodedQuery = encodeURIComponent(query);
+  const newLocation = `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=${encodedQuery}`;
+  setMapSource(newLocation);
   }
 
   const handleSearch = () => {
@@ -73,7 +74,7 @@ function SidePanel({ isOpen, searchQuery, onClose }) {
           </div>
           <iframe
             className="map-placeholder"
-            src="https://maps.google.com/maps?q=Simon+Fraser+University&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src={mapSource || "https://maps.google.com/maps?q=Simon+Fraser+University&output=embed"}
             allowFullScreen
             title="Map"
           ></iframe>
