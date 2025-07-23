@@ -112,7 +112,7 @@ function Itinerary() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const [placesToItinerize, setPlacesToItinerize] = useState(initialPlacesDataFromTeamMember);
+    const [placesToItinerize, setPlacesToItinerize] = useState(waitingForData);
 
 
     const fetchItinerary = async () => {
