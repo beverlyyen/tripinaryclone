@@ -21,6 +21,17 @@ function SidePanel({ isOpen, searchQuery, onClose , placeId }) {
     }
   }, [searchQuery]);
 
+  
+  useEffect(() => {
+    if (placeId) {
+      fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${APIKEY}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.result) setPlaceDetails(data.result);
+        });
+    }
+  }, [placeId]);
+
   const updateMapSource = (query) => {
   const encodedQuery = encodeURIComponent(query);
   const newLocation = `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=${encodedQuery}`;
