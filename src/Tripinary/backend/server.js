@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const helmet = require('helmet'); // Security headers
+// const helmet = require('helmet'); // Security headers
 const rateLimit = require('express-rate-limit'); // Rate limiting
 require('dotenv').config(); // Load environment variables from .env
 
@@ -10,14 +10,14 @@ const app = express();
 const PORT = process.env.PORT || 5000; // Backend will run on port 5000 by default
 
 // --- Middleware Setup ---
-app.use(helmet());
-app.disable('x-powered-by');
+// app.use(helmet());
+// app.disable('x-powered-by');
 
 // 2. CORS Configuration
 // In development, allow all origins.
 // In production, **STRICTLY** specify your frontend domain(s) for security.
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow your React dev server
+    origin: 'http://localhost:5173', // Allow your React dev server
     methods: 'POST', // Only allow POST requests to your API endpoint
     optionsSuccessStatus: 200 // For pre-flight requests
 };
