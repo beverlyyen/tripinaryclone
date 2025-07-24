@@ -24,11 +24,6 @@ function Activity_Suggestions({ pois }) {
           </>
         ))}
       </div>
-
-      <div className="submit_area">
-        <p>{dummy_num_destinations} Destinations Selected</p>
-        <button onClick={(e) => handleSubmit(e)}>Generate Itinerary</button>
-      </div>
     </div>
   );
 }

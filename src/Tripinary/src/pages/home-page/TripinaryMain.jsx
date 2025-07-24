@@ -1,14 +1,10 @@
-import { React, useState, useRef, useCallback } from "react";
+import { React, useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Place_AutoComplete from "../../components/place_autocomplete/Place_Autocomplete";
 import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
 import "./TripinaryMain.css";
 import categoryTypes from "../../assets/category_types.json"
 
-const formObject = {
-  place: null,
-  hours: null,
-};
 
 const poisFormat = {
   food_drinks: [],
@@ -19,6 +15,9 @@ const poisFormat = {
 
 const TripinaryMain = () => {
   const [clicked, setClick] = useState(false);
+
+  const [duration, setDuration] = useState(0);
+  const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [pois, setPois] = useState(poisFormat);
 
@@ -46,7 +45,7 @@ const TripinaryMain = () => {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": API_KEY,
-        "X-Goog-FieldMask": "places.displayName,places.types,places.formattedAddress,places.location,places.photos,places.generativeSummary,places.editorialSummary,places.rating,places.priceLevel",
+        "X-Goog-FieldMask": "places.id,places.displayName,places.types,places.formattedAddress,places.location,places.photos,places.generativeSummary,places.editorialSummary,places.rating,places.priceLevel",
       },
       body: JSON.stringify(reqBody),
     };
@@ -58,7 +57,6 @@ const TripinaryMain = () => {
       }
   
       const data = await response.json();
-      console.log(data.places)
       setPois((prevPois) => ({
         ...prevPois,
         [category]: [...prevPois[category], ...(data.places || [])],
@@ -70,7 +68,7 @@ const TripinaryMain = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmitDestination = (e) => {
     e.preventDefault();
     setClick(true);
 
@@ -89,8 +87,16 @@ const TripinaryMain = () => {
     } else {
       console.warn("No place selected.");
     }
-
   };
+
+  const handleSubmitItinerary = (e) => {
+    e.preventDefault()
+    
+    if(!!!selectedPlace)
+      window.alert("There is no destination selected yet!")
+  }
+
+
   return (
     <div className="tripinarymain">
       <div className="form">
@@ -111,11 +117,17 @@ const TripinaryMain = () => {
           <div className="number-box">
             <h5>Trip Duration</h5>
             <input
-              type="text"
+              type="number"
               className="number-input"
               placeholder="Enter a number"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
             />
-            <select defaultValue="Days" className="drop-down">
+            <select 
+              className="drop-down"
+              value={timeType}
+              onChange={(e) => setTimeType(e.target.value)}
+            >
               <option value="hours">Hours</option>
               <option value="days">Days</option>
               <option value="weeks">Weeks</option>
@@ -125,7 +137,7 @@ const TripinaryMain = () => {
             <button
               type="button"
               className="enter-button"
-              onClick={(e) => handleSubmit(e)}
+              onClick={(e) => handleSubmitDestination(e)}
             >
               Plan My Trip!
             </button>
@@ -147,6 +159,11 @@ const TripinaryMain = () => {
           )}
         </AnimatePresence>
       </div>
+      <div className="submit_area">
+        <p>Destinations Selected</p>
+        <button onClick={(e) => handleSubmitItinerary(e)}>Generate Itinerary</button>
+      </div>
+
     </div>
   );
 };

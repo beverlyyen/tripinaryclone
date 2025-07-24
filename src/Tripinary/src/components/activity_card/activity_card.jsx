@@ -1,23 +1,44 @@
-import React from "react"
-import "./activity_card.css"
-
+import React, { useContext } from "react"
 import { Rating, ThinRoundedStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
+import "./activity_card.css"
+import ItineraryContext from "../../context/ItineraryContext"
 
-function Activity_Card({img, title, desc, rating, price_level}) {
-  const priceLevels = {
-    PRICE_LEVEL_INEXPENSIVE: '$',
-    PRICE_LEVEL_MODERATE: '$$',
-    PRICE_LEVEL_EXPENSIVE: '$$$',
-    PRICE_LEVEL_VERY_EXPENSIVE: '$$$$'
-  };
+const priceLevels = {
+  PRICE_LEVEL_INEXPENSIVE: '$',
+  PRICE_LEVEL_MODERATE: '$$',
+  PRICE_LEVEL_EXPENSIVE: '$$$',
+  PRICE_LEVEL_VERY_EXPENSIVE: '$$$$'
+};
 
-  const getPriceLevel = (level) => priceLevels[level] || '';
+const getPriceLevel = (level) => priceLevels[level] || '';
+
+function Activity_Card({id, img, title, desc, rating, price_level, location}) {
+  const { itineraryForm, addSelectedPlace, removeSelectedPlace, isPlaceInForm } = useContext(ItineraryContext)
+
+  const isSelected = itineraryForm.selectedPlaces.some(place => place.id === id);
+  
+  const handleClickPlace = (id, title, location) => {
+    if(isPlaceInForm(id)) {
+      removeSelectedPlace(id)
+    } else {
+      addSelectedPlace({ 
+        "id": id,
+        "name" : title,
+        "location": {
+          "lat": location.latitude,
+          "lng": location.longitude
+        }
+      })
+    }
+
+    console.log(itineraryForm)
+  }
 
   return (
-    <div className={"activity_card"}>
+    <div className={`activity_card ${isSelected ? 'selected_card' : ''}`} onClick={() => handleClickPlace(id, title, location)}>
       <div className="img_container">
-        <img src={img} alt={`Image for ${img.name}`} />
+        <img src={img} alt={`Image for ${title}`} />
       </div>
 
       <div className="card_details">

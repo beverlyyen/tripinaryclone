@@ -12,6 +12,7 @@ const Place_AutoComplete = ({ onPlaceSelected }) => {
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current.getPlace();
+    console.log(place)
     if (place && place.geometry) {
       onPlaceSelected?.(place);
     }

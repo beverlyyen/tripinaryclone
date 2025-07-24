@@ -18,7 +18,6 @@ function Activity_Carousel({ category, list }) {
     return `https://places.googleapis.com/v1/${imgSrc}/media?key=${API_KEY}&maxWidthPx=${maxWidth}`
   }
 
-
   return (
     <div className="carousel-container">
       <h1>{category}</h1>
@@ -35,12 +34,14 @@ function Activity_Carousel({ category, list }) {
             <SwiperSlide key={i}>
               <div className="activity_card_container">
                 <Activity_Card
+                  id={attr.id}
                   img={attr.photos && attr.photos.length > 0 ?
                     getPhotoUrl(attr.photos[0].name, 300) : "default_img"}
                   title={attr.displayName.text}
                   desc={attr.editorialSummary?.text || attr.generativeSummary?.text || ''}
                   rating={attr.rating}
                   price_level={attr.priceLevel || ''}
+                  location={attr.location}
                 />
               </div>
             </SwiperSlide>
