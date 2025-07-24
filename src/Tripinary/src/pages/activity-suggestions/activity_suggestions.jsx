@@ -3,13 +3,13 @@ import Activity_Carousel from "../../components/activity_carousel/activity_carou
 import "./activity_suggestions.css";
 import dummy_data from "../../assets/activity_dummy_data.json";
 
-function Activity_Suggestions(pois) {
+function Activity_Suggestions({ pois }) {
   const dummy_num_destinations = 6;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Generating Itinerary!!!!");
+    console.log(pois);
   };
 
   return (
@@ -18,9 +18,9 @@ function Activity_Suggestions(pois) {
         Plan a trip in <span>{dummy_data.destination}</span>
       </h1>
       <div>
-        {dummy_data.suggestions.map((item, i) => (
+        {Object.entries(pois).map(([category, places]) => (
           <>
-            <Activity_Carousel category={item.category} list={item.list} />
+            <Activity_Carousel category={category} list={places} />
           </>
         ))}
       </div>

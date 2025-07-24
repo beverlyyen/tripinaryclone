@@ -55,7 +55,6 @@ const TripinaryMain = () => {
                   ...prevPois,
                   [category]: [...prevPois[category], ...newPois],
                 }));
-                console.log(pois);
               }}
             />
           </div>
