@@ -9,6 +9,8 @@ const initialItineraryForm = {
   selectedPlaces: []
 };
 
+
+
 // Create the Context
 const ItineraryContext = React.createContext({
   itineraryForm: initialItineraryForm,
