@@ -114,7 +114,7 @@ function Itinerary() {
 
     const fetchItinerary = async () => {
         setIsLoading(true);
-        setError(null); 
+        setError(null);
         try {
             const apiURL = 'http://localhost:5000/api/generate-itinerary';
 
@@ -128,21 +128,21 @@ function Itinerary() {
 
             const response = await fetch(apiURL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json',},
+                headers: { 'Content-Type': 'application/json', },
                 body: JSON.stringify({ places: dataToSend }), // Send the array of place objects
             });
 
             // Error handling for non-successful HTTP responses from BACKEND
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: 'Unknown error from backend.' }));
-                throw new Error(`Error in backend. Status Code: ${response.status} - ${errorData.message || response.statusText}`);
+                throw new Error(`Issue in the backend. Status Code: ${response.status}: ${errorData.message || response.statusText}`);
             }
 
             const data = await response.json(); // JSON response received from backend
-            
+
             // Basic validation to ensure the AI returned expected itinerary structure
             if (!Array.isArray(data) || data.some(day => !day.day || !Array.isArray(day.items))) {
-                 throw new Error("Generated itinerary is in an unexpected format from the AI.");
+                throw new Error("Generated itinerary is in an unexpected format from the AI.");
             }
             setItinerary(data); // Update React state with the new itinerary
 
@@ -167,10 +167,10 @@ function Itinerary() {
     return (
         <div className="itinerary-container">
             <SidePanel isOpen={isSidePanelOpen} searchQuery={searchQuery} onClose={() => setIsSidePanelOpen(false)} />
-            
+
             <div className="itinerary-header">
                 <h1>Itinerary</h1>
-                <p>Trip to... TEMPOARY THING HERE</p> 
+                <p>Trip to... I'LL ADD THIS IN LATER</p>
             </div>
 
             {isLoading && <p>Generating your itinerary ...</p>}
@@ -186,17 +186,17 @@ function Itinerary() {
                 />
             ))}
 
-            {!isLoading && !error && !itinerary && (
-                <p>Click "Regenerate" to start generating your itinerary!</p>
+            {!isLoading && !error && !itinerary && ( // shows when
+                <p>Click "Regenerate" to start regenerate your itinerary!</p>
             )}
 
             <div className="itinerary-button">
-            <button
+                <button
                     className="regenerate-button"
                     onClick={fetchItinerary}
                     disabled={isLoading || placesToItinerize.length === 0} // Disable if loading or no input places
                 >
-                    {isLoading ? "Regenerating..." : "Regenerate ↺"}
+                    {isLoading ? "Generating..." : "Regenerate ↺"}
                 </button>
             </div>
         </div>
