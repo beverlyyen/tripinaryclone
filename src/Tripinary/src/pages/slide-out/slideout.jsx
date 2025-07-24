@@ -6,14 +6,31 @@ import magnifierIcon from "../../pages/slide-out/search.png";
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
 function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
-  // Use a dummy placeId if none is provided (Google Sydney office)
-  if (!placeId) {
-    placeId = "ChIJN1t_tDeuEmsRUsoyG83frY4";
-  }
+  
+  const defaultPlaceId = "ChIJN1t_tDeuEmsRUsoyG83frY4"; 
+  const effectivePlaceId = placeId || defaultPlaceId;
 
   const [mapSource, setMapSource] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [placeDetails, setPlaceDetails] = useState(null);
+
+  // Update map and details when placeId changes
+  useEffect(() => {
+
+    setMapSource(
+      `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
+    );
+
+    fetch(`http://localhost:3000/api/place-details?place_id=${effectivePlaceId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) setPlaceDetails(data.result);
+      })
+      .catch((err) => {
+        console.error("Error fetching place details:", err);
+      });
+  }, [effectivePlaceId]);
+
 
   useEffect(() => {
     if (searchQuery) {
@@ -21,18 +38,6 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
       updateMapSource(searchQuery);
     }
   }, [searchQuery]);
-
-  useEffect(() => {
-    if (placeId) {
-      fetch(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${APIKEY}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.result) setPlaceDetails(data.result);
-        });
-    }
-  }, [placeId]);
 
   const updateMapSource = (query) => {
     const encodedQuery = encodeURIComponent(query);
