@@ -1,39 +1,40 @@
-import { useState } from 'react'
-import Activity_Carousel from '../../components/activity_carousel/activity_carousel.jsx'
-import './activity_suggestions.css'
-import dummy_data from '../../assets/activity_dummy_data.json'
+import { useState } from "react";
+import Activity_Carousel from "../../components/activity_carousel/activity_carousel.jsx";
+import "./activity_suggestions.css";
 
-function Activity_Suggestions() {
-  const dummy_num_destinations = 6
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("Generating Itinerary!!!!")
+const getCategory = (cat) => {
+  switch(cat) {
+    case "food_drinks":
+      return "Food & Drinks"
+    case "attractions_sightseeing":
+      return "Attractions & Sightseeing"
+    case "activities_recreation":
+      return "Activities & Recreation"
+    case "shopping":
+      return "Shopping"
+    default:
+      return "" 
   }
+}
+
+function Activity_Suggestions({ pois, destination }) {
+
+
 
   return (
-    <div className='activity_suggestions'>
-      <h1>Plan a trip in <span>{dummy_data.destination}</span></h1>
+    <div className="activity_suggestions">
+      <h1>
+        Plan a trip in <span>{destination}</span>
+      </h1>
       <div>
-        {dummy_data.suggestions.map((item, i) => (
+        {Object.entries(pois).map(([category, places]) => (
           <>
-            <Activity_Carousel
-              category={item.category}
-              list={item.list}
-            />
+            <Activity_Carousel category={getCategory(category)} list={places} />
           </>
         ))}
       </div>
-
-      <div className='submit_area'>
-        <p>{dummy_num_destinations} Destinations Selected</p>
-        <button onClick={(e) => handleSubmit(e)}>Generate Itinerary</button>
-      </div>
     </div>
-  )
+  );
 }
 
-
-
-export default Activity_Suggestions
+export default Activity_Suggestions;
