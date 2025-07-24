@@ -9,7 +9,15 @@ import Activity_Card from "../activity_card/activity_card";
 import "./activity_carousel.css";
 
 function Activity_Carousel({ category, list }) {
-  console.log({ category: category, pois: list });
+
+  const getPhotoUrl = (imgSrc, maxWidth) => {
+    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; 
+    if (!imgSrc) 
+      return "default_img.jpg"
+
+    return `https://places.googleapis.com/v1/${imgSrc}/media?key=${API_KEY}&maxWidthPx=${maxWidth}`
+  }
+
 
   return (
     <div className="carousel-container">
@@ -27,11 +35,12 @@ function Activity_Carousel({ category, list }) {
             <SwiperSlide key={i}>
               <div className="activity_card_container">
                 <Activity_Card
-                  img={`${attr.name}.png`}
-                  title={attr.name}
-                  desc={attr.description}
+                  img={attr.photos && attr.photos.length > 0 ?
+                    getPhotoUrl(attr.photos[0].name, 300) : "default_img"}
+                  title={attr.displayName.text}
+                  desc={attr.editorialSummary?.text || attr.generativeSummary?.text || ''}
                   rating={attr.rating}
-                  price_level={attr.price_level}
+                  price_level={attr.priceLevel || ''}
                 />
               </div>
             </SwiperSlide>

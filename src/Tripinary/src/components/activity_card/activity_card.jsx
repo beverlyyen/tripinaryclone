@@ -17,7 +17,7 @@ function Activity_Card({img, title, desc, rating, price_level}) {
   return (
     <div className={"activity_card"}>
       <div className="img_container">
-        <img src={img} alt={`Image for ${title}`} />
+        <img src={img} alt={`Image for ${img.name}`} />
       </div>
 
       <div className="card_details">

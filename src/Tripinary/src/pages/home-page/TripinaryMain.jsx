@@ -1,8 +1,9 @@
-import { React, useState } from "react";
-import "./TripinaryMain.css";
-import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
+import { React, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Place_AutoComplete from "../../components/place_autocomplete/Place_Autocomplete";
+import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
+import "./TripinaryMain.css";
+import categoryTypes from "../../assets/category_types.json"
 
 const formObject = {
   place: null,
@@ -18,22 +19,77 @@ const poisFormat = {
 
 const TripinaryMain = () => {
   const [clicked, setClick] = useState(false);
-
-  const [form, setForm] = useState(formObject);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [pois, setPois] = useState(poisFormat);
+
+  const findNearbyPlaces = async (location, category, types) => {
+    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const url = "https://places.googleapis.com/v1/places:searchNearby"
+
+    const reqBody = {
+      includedTypes: types.includedTypes,
+      excludedTypes: types.excludedTypes,
+      maxResultCount: 20,
+      locationRestriction: {
+        circle: {
+          center: {
+            latitude: location.lat,
+            longitude: location.lng
+          },
+          radius: 5000
+        },
+      }
+    }
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": API_KEY,
+        "X-Goog-FieldMask": "places.displayName,places.types,places.formattedAddress,places.location,places.photos,places.generativeSummary,places.editorialSummary,places.rating,places.priceLevel",
+      },
+      body: JSON.stringify(reqBody),
+    };
+    try {
+      const response = await fetch(url, options);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data.places)
+      setPois((prevPois) => ({
+        ...prevPois,
+        [category]: [...prevPois[category], ...(data.places || [])],
+      }))
+
+    } catch (error) {
+      console.error("Could not fetch nearby places:", error);
+      return null;
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setClick(true);
 
-    // update form once destination and trip duration is picked
-    form.place = selectedPlace;
-    form.hours = 5;
-    console.log(form);
+    if (selectedPlace && selectedPlace.geometry) {
+      const location = {
+        lat: selectedPlace.geometry.location.lat(),
+        lng: selectedPlace.geometry.location.lng()
+      };
 
-    // transform POIs
-    console.log(pois);
+      for (const category in categoryTypes) {
+        if (categoryTypes.hasOwnProperty(category)) {
+          // grab all nearby places for this category 
+          findNearbyPlaces(location, category, categoryTypes[category])
+        }
+      }  
+    } else {
+      console.warn("No place selected.");
+    }
+
   };
   return (
     <div className="tripinarymain">
@@ -49,12 +105,6 @@ const TripinaryMain = () => {
             <Place_AutoComplete
               onPlaceSelected={(place) => {
                 setSelectedPlace(place);
-              }}
-              onSetPois={(category, newPois) => {
-                setPois((prevPois) => ({
-                  ...prevPois,
-                  [category]: [...prevPois[category], ...newPois],
-                }));
               }}
             />
           </div>
