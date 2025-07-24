@@ -4,6 +4,7 @@ import Place_AutoComplete from "../../components/place_autocomplete/Place_Autoco
 import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
 import "./TripinaryMain.css";
 import categoryTypes from "../../assets/category_types.json"
+import ItineraryContext from "../../context/ItineraryContext";
 
 
 const poisFormat = {
@@ -15,11 +16,12 @@ const poisFormat = {
 
 const TripinaryMain = () => {
   const [clicked, setClick] = useState(false);
-
   const [duration, setDuration] = useState(0);
   const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [pois, setPois] = useState(poisFormat);
+  const { itineraryForm } = useContext(ItineraryContext);
+
 
   const findNearbyPlaces = async (location, category, types) => {
     const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -71,6 +73,8 @@ const TripinaryMain = () => {
   const handleSubmitDestination = (e) => {
     e.preventDefault();
     setClick(true);
+
+    console.log(selectedPlace)
 
     if (selectedPlace && selectedPlace.geometry) {
       const location = {
@@ -154,13 +158,13 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions pois={pois} />
+              <Activity_Suggestions pois={pois} destination={selectedPlace.name} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
       <div className="submit_area">
-        <p>Destinations Selected</p>
+        <p>{itineraryForm.selectedPlaces.length} Destinations Selected</p>
         <button onClick={(e) => handleSubmitItinerary(e)}>Generate Itinerary</button>
       </div>
 

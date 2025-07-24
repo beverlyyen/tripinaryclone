@@ -140,9 +140,11 @@
     line-height: 40px;
   
     background-color: white;
-  }
+}
   
-  .submit_area > p {
-    margin-right: 30px;
-  }
+.submit_area > p {
+    margin-right: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
   

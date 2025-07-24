@@ -31,8 +31,6 @@ function Activity_Card({id, img, title, desc, rating, price_level, location}) {
         }
       })
     }
-
-    console.log(itineraryForm)
   }
 
   return (
