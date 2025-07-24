@@ -16,14 +16,19 @@ app.get('/api/place-details', async (req, res) => {
   if (!place_id) return res.status(400).json({ error: 'Missing place_id' });
 
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${APIKEY}`;
-      const response = await fetch(url);
+  try {
+    const response = await fetch(url);
     const data = await response.json();
     if (data.status !== "OK") {
       console.error("Google API error:", data);
       return res.status(500).json({ error: "Google API error", details: data });
     }
     res.json(data);
- });
+  } catch (err) {
+    console.error("Error fetching from Google Places API:", err);
+    res.status(500).json({ error: 'Failed to fetch from Google Places API', details: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Backend listening on port ${PORT}`);
