@@ -1,0 +1,84 @@
+{
+  "food_drinks" : {
+    "includedTypes": [    
+      "restaurant",
+      "cafe",
+      "bar",
+      "bakery",
+      "bar_and_grill",
+      "wine_bar",
+      "pub",
+      "asian_restaurant"
+    ],
+    "excludedTypes": [
+      "hotel",
+      "lodging",
+      "fast_food_restaurant"
+    ]
+  },
+  "attractions_sightseeing" : {
+    "includedTypes": [    
+      "tourist_attraction",
+      "museum",
+      "art_gallery",
+      "zoo",
+      "aquarium",
+      "library",
+      "adventure_sports_center",
+      "amphitheatre",
+      "botanical_garden",
+      "night_club",
+      "hiking_area",
+      "beach",
+      "cultural_landmark",
+      "historical_place"
+    ],
+    "excludedTypes": [
+      "hotel",
+      "lodging",
+      "restaurant"
+    ]
+  },
+  "activities_recreation" : {
+    "includedTypes": [
+      "park",
+      "stadium",
+      "gym",
+      "spa",
+      "bowling_alley",
+      "movie_theater",
+      "amusement_park",
+      "swimming_pool",
+      "video_arcade",
+      "night_club",
+      "adventure_sports_center"
+    ],
+    "excludedTypes": [
+      "hotel",
+      "lodging",
+      "restaurant",
+      "botanical_garden"
+    ]
+  },
+  "shopping" : {
+    "includedTypes": [
+      "shopping_mall",
+      "clothing_store",
+      "department_store",
+      "shoe_store",
+      "jewelry_store",
+      "book_store",
+      "shopping_mall"
+    ],
+    "excludedTypes": [
+      "grocery_store",
+      "supermarket",
+      "convenience_store",
+      "cell_phone_store",
+      "warehouse_store",
+      "wholesaler",
+      "home_improvement_store",
+      "discount_store"
+    ]
+  }
+}

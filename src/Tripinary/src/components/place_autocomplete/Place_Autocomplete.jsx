@@ -1,23 +1,19 @@
-import React, { useRef } from "react";
-import { LoadScript, Autocomplete } from '@react-google-maps/api'
+import React, { useRef, useCallback } from "react";
+import { LoadScript, Autocomplete, GoogleMap } from "@react-google-maps/api";
 
-const libraries = ['places']
+const libraries = ["places"];
 
 const options = {
-  types: ['(cities)']
-}
+  types: ["(cities)"],
+};
 
 const Place_AutoComplete = ({ onPlaceSelected }) => {
-  const autocompleteRef = useRef(null)
-
-  const handleLoad = (autocomplete) => {
-    autocompleteRef.current = autocomplete
-  }
+  const autocompleteRef = useRef(null);
 
   const handlePlaceChanged = () => {
     const place = autocompleteRef.current.getPlace();
     if (place && place.geometry) {
-      onPlaceSelected(place);
+      onPlaceSelected?.(place);
     }
   };
 
@@ -25,9 +21,10 @@ const Place_AutoComplete = ({ onPlaceSelected }) => {
     <LoadScript
       googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
       libraries={libraries}
+      version="beta"
     >
       <Autocomplete
-        onLoad={handleLoad}
+        onLoad={(auto) => (autocompleteRef.current = auto)}
         onPlaceChanged={handlePlaceChanged}
         options={options}
       >
@@ -35,16 +32,14 @@ const Place_AutoComplete = ({ onPlaceSelected }) => {
           type="text"
           placeholder="Enter a city"
           style={{
-            width: '200px',
-            // height: '17px',
-            padding: '5px',
-            fontSize: '14px',
+            width: "200px",
+            padding: "5px",
+            fontSize: "14px",
           }}
         />
       </Autocomplete>
     </LoadScript>
-  )
+  );
+};
 
-}
-
-export default Place_AutoComplete
+export default Place_AutoComplete;
