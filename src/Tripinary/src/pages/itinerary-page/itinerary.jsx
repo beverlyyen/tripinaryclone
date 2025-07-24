@@ -3,7 +3,7 @@ import DayCard from "../../components/day_card/day_card";
 import "./itinerary.css";
 import SidePanel from "../slide-out/slideout";
 
-// INITIAL DATA - Beverly i think your implementation may be based on this one rn
+// INITIAL DATA (WILL REMOVE LATER)-Bev i think your implementation may be based on this one rn
 // const itineraryData = {
 //     destination: "Vancouver",
 //     days: [
@@ -34,7 +34,7 @@ import SidePanel from "../slide-out/slideout";
 //     ],
 // };
 
-const waitingForData = [
+const waitingForData = [ // will change once i get from renz
     {
         "name": "Stanley Park",
         "vicinity": "Vancouver, BC, Canada",
@@ -97,11 +97,10 @@ const waitingForData = [
 
 function Itinerary() {
 
+    // Beverly's map stuff 
     const [mapLocation, setupMapLocation] = useState("");
-
     const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-
     const handleItemClick = (activity) => {
         setSearchQuery(activity);
         setIsSidePanelOpen(true);
@@ -111,41 +110,36 @@ function Itinerary() {
     const [itinerary, setItinerary] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
     const [placesToItinerize, setPlacesToItinerize] = useState(waitingForData);
-
 
     const fetchItinerary = async () => {
         setIsLoading(true);
         setError(null); 
         try {
-            // URL of your Node.js backend API endpoint
-            const apiUrl = 'http://localhost:5000/api/generate-itinerary';
+            const apiURL = 'http://localhost:5000/api/generate-itinerary';
 
-            // Prepare data to send and backend will extract only the 'name' from each for the AI prompt.
-            const dataToSend = placesToItinerize.map(place => ({
+            // Prepare data to send and backend will extract only the 'name' for AI prompt
+            const dataToSend = placesToItinerize.map(place => ({ // THIS WILL CHANGE DEPEDNING ON RENZ'S
                 name: place.name,
                 vicinity: place.vicinity,
                 types: place.types,
                 geometry: place.geometry ? { location: place.geometry.location } : undefined
             }));
 
-            const response = await fetch(apiUrl, {
+            const response = await fetch(apiURL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json',},
                 body: JSON.stringify({ places: dataToSend }), // Send the array of place objects
             });
 
             // Error handling for non-successful HTTP responses from BACKEND
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: 'Unknown error from backend.' }));
-                throw new Error(`Backend error! Status: ${response.status} - ${errorData.message || response.statusText}`);
+                throw new Error(`Error in backend. Status Code: ${response.status} - ${errorData.message || response.statusText}`);
             }
 
-            // Parse the JSON response received from YOUR BACKEND
-            const data = await response.json();
+            const data = await response.json(); // JSON response received from backend
+            
             // Basic validation to ensure the AI returned expected itinerary structure
             if (!Array.isArray(data) || data.some(day => !day.day || !Array.isArray(day.items))) {
                  throw new Error("Generated itinerary is in an unexpected format from the AI.");
@@ -153,23 +147,21 @@ function Itinerary() {
             setItinerary(data); // Update React state with the new itinerary
 
         } catch (err) {
-            console.error("Failed to fetch itinerary:", err);
+            console.error("Failed to get the generated itinerary:", err);
             setError(err.message);
         } finally {
             setIsLoading(false);
         }
     };
 
-    // This runs ONCE when the component mounts to get the initial itinerary,
-    // and again if `placesToItinerize` (your input data) changes.
+    // This runs when when  component mounts to get the initial itinerary or if input changes
     useEffect(() => {
         if (placesToItinerize && placesToItinerize.length > 0) {
             fetchItinerary();
         } else {
-            setError("No places data provided to generate an itinerary initially. Please ensure the 'placesToItinerize' array is populated.");
+            setError("No places data provided to generate an itinerary initially. Please try again.");
         }
     }, [placesToItinerize]);
-
 
     // IMPORTANT - CHANGE THE Trip to... part later once renz sends the location with the maps data
     return (
@@ -178,10 +170,10 @@ function Itinerary() {
             
             <div className="itinerary-header">
                 <h1>Itinerary</h1>
-                <p>Trip to... TEMPOARARY THING HERE</p> 
+                <p>Trip to... TEMPOARY THING HERE</p> 
             </div>
 
-            {isLoading && <p>Generating your itinerary, please wait...</p>}
+            {isLoading && <p>Generating your itinerary ...</p>}
             {error && <p className="error-message">Error: {error}</p>}
 
             {!isLoading && !error && itinerary && itinerary.map((day, index) => (
