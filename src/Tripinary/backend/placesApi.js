@@ -8,7 +8,6 @@ const PORT = 3000;
 app.use(cors());
 
 const APIKEY = process.env.GOOGLE_PLACES_API_KEY;
-console.log("API KEY:", APIKEY);
 
 
 app.get('/api/place-details', async (req, res) => {
