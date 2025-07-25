@@ -50,7 +50,7 @@ function Itinerary() {
             ) : (
                 placesToItinerize.length > 0 && !isLoading && !error && (
                     <div className="itinerary-button">
-                        <p>Something went wrong or itinerary not yet generated. Please try again from the previous page.</p>
+                        <p>Something went wrong or itinerary not yet generated. Please try again.</p>
                     </div>
                 )
             )}
