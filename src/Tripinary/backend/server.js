@@ -145,7 +145,28 @@ app.post('/api/generate-itinerary', async (req, res) => {
     }
 });
 
-app.use((err, req, res, next) => {
+const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+
+app.get('/api/place-details', async (req, res) => {
+    const { place_id } = req.query;
+    if (!place_id) return res.status(400).json({ error: 'Missing place_id' });
+
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLE_PLACES_API_KEY}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.status !== "OK") {
+            console.error("Google API error:", data);
+            return res.status(500).json({ error: "Google API error", details: data });
+        }
+        res.json(data);
+    } catch (err) {
+        console.error("Error fetching from Google Places API:", err);
+        res.status(500).json({ error: 'Failed to fetch from Google Places API', details: err.message });
+    }
+});
+
+app.use((err, res) => {
     console.error(err.stack); 
     res.status(500).send('Something went wrong on the server!');
 });
@@ -153,3 +174,13 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Backend server running on http://localhost:${PORT}`);
 });
+
+app.use((err, res) => {
+    console.error(err.stack); 
+    res.status(500).send('Something went wrong on the server!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Backend server running on http://localhost:${PORT}`);
+});
+
