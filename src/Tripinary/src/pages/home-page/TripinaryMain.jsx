@@ -16,20 +16,19 @@ const TripinaryMain = () => {
   const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
 
-  const { itineraryForm } = useContext(ItineraryContext);
+  const { itineraryForm, updateDestinationName, updateDuration } = useContext(ItineraryContext);
   const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext)
 
-
-  // useEffect(() => {
-  //   if (!isPoisEmpty()) {
-  //     setClick(true); // Show suggestions if POIs exist from previous session
-  //   }
-  // }, [isPoisEmpty]);
+  useEffect(() => {
+    if (!isPoisEmpty()) {
+      setClick(true); // Show suggestions if POIs exist from previous session
+    }
+  }, [isPoisEmpty]);
 
   const handleSubmitDestination = (e) => {
     e.preventDefault();
     setClick(true);
-
+    
     if (selectedPlace && selectedPlace.geometry) {
       const location = {
         lat: selectedPlace.geometry.location.lat(),
@@ -41,9 +40,12 @@ const TripinaryMain = () => {
 
       for (const category in categoryTypes) {
         if (categoryTypes.hasOwnProperty(category)) {
-          // findPois(location, category, categoryTypes[category])
+          findPois(location, category, categoryTypes[category])
         }
       }  
+
+      updateDestinationName(selectedPlace.name)
+      updateDuration(duration, timeType)
     } else {
       console.warn("No place selected.");
     }
@@ -113,7 +115,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions pois={pois} destination={selectedPlace.name} />
+              <Activity_Suggestions pois={pois} destination={itineraryForm.destinationName} />
             </motion.div>
           )}
         </AnimatePresence>

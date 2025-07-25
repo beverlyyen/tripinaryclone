@@ -19,7 +19,8 @@ const ItineraryContext = React.createContext({
   updateDuration: () => {},
   addSelectedPlace: () => {},
   removeSelectedPlace: () => {},
-  isPlaceInForm: () => {}
+  isPlaceInForm: () => {},
+  clearItineraryForm: () => {}
 });
 
 export default ItineraryContext;

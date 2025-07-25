@@ -11,10 +11,10 @@ const poisFormat = {
 function PoisProvider({ children }) {
   const [pois, setPois] = useState(() => {
     try {
-      const savedPois = localStorage.getItem('tripinaryPois');
+      const savedPois = sessionStorage.getItem('tripinaryPois');
       return savedPois ? JSON.parse(savedPois) : poisFormat;
     } catch (error) {
-      console.error("Failed to load POIs from localStorage:", error);
+      console.error("Failed to load POIs from sessionStorage:", error);
       return poisFormat;
     }
   });
@@ -22,10 +22,9 @@ function PoisProvider({ children }) {
   // Save POIs to local storage whenever 'pois' change
   useEffect(() => {
     try {
-      localStorage.setItem('tripinaryPois', JSON.stringify(pois));
-      console.log("POIs saved to localStorage:", pois);
+      sessionStorage.setItem('tripinaryPois', JSON.stringify(pois));
     } catch (error) {
-      console.error("Failed to save POIs to localStorage:", error);
+      console.error("Failed to save POIs to sessionStorage:", error);
     }
   }, [pois]);
 
