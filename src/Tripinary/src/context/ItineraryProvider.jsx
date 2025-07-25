@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ItineraryContext from './ItineraryContext.jsx';
 
 // Define the initial state structure (can be imported from ItineraryContext.js too)
@@ -12,8 +12,25 @@ const initialItineraryForm = {
 };
 
 function ItineraryProvider({ children }) {
-  const [itineraryForm, setItineraryForm] = useState(initialItineraryForm);
+  const [itineraryForm, setItineraryForm] = useState(() => {
+    try {
+      const savedItineraryForm = sessionStorage.getItem('tripinaryItineraryForm');
+      return savedItineraryForm ? JSON.parse(savedItineraryForm) : initialItineraryForm;
+    } catch (error) {
+      console.error("Failed to load itineraryForm from sessionStorage:", error);
+      return initialItineraryForm;
+    }
+  });
 
+  // Save itineraryForm to session storage whenever 'itineraryForm' changes
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('tripinaryItineraryForm', JSON.stringify(itineraryForm));
+    } catch (error) {
+      console.error("Failed to save itineraryForm to sessionStorage:", error);
+    }
+  }, [itineraryForm]);
+  
   const updateDestinationName = useCallback((name) => {
     setItineraryForm(prevForm => ({
       ...prevForm,
@@ -32,10 +49,15 @@ function ItineraryProvider({ children }) {
   }, []);
 
   const addSelectedPlace = useCallback((place) => {
-    setItineraryForm(prevForm => ({
-      ...prevForm,
-      selectedPlaces: [...prevForm.selectedPlaces, place]
-    }));
+    setItineraryForm(prevForm => {
+      if (prevForm.selectedPlaces.some(p => p.id === place.id)) {
+        return prevForm; // current place already exists
+      }
+      return {
+        ...prevForm,
+        selectedPlaces: [...prevForm.selectedPlaces, place]
+      };
+    });
   }, []);
 
   const removeSelectedPlace = useCallback((placeId) => {
@@ -49,6 +71,12 @@ function ItineraryProvider({ children }) {
     return itineraryForm.selectedPlaces.some(place => place.id === placeId);
   }, [itineraryForm.selectedPlaces]);
 
+  const clearItineraryForm = useCallback(() => {
+    setItineraryForm(initialItineraryForm);
+    sessionStorage.removeItem('tripinaryItineraryForm');
+  }, []);
+  
+
   const contextValue = {
     itineraryForm,
     setItineraryForm,
@@ -56,7 +84,8 @@ function ItineraryProvider({ children }) {
     updateDuration,
     addSelectedPlace,
     removeSelectedPlace,
-    isPlaceInForm
+    isPlaceInForm,
+    clearItineraryForm
   };
 
   return (

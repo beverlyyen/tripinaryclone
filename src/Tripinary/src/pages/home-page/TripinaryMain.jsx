@@ -1,93 +1,51 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import Place_AutoComplete from "../../components/place_autocomplete/Place_Autocomplete";
 import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
-import "./TripinaryMain.css";
-import categoryTypes from "../../assets/category_types.json"
+
 import ItineraryContext from "../../context/ItineraryContext";
+import PoisContext from "../../context/PoisContext";
 
-
-const poisFormat = {
-  food_drinks: [],
-  attractions_sightseeing: [],
-  activities_recreation: [],
-  shopping: [],
-};
+import categoryTypes from "../../assets/category_types.json";
+import "./TripinaryMain.css";
 
 const TripinaryMain = () => {
   const [clicked, setClick] = useState(false);
   const [duration, setDuration] = useState(0);
   const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [pois, setPois] = useState(poisFormat);
-  const { itineraryForm } = useContext(ItineraryContext);
 
+  const { itineraryForm, updateDestinationName, updateDuration } = useContext(ItineraryContext);
+  const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext)
 
-  const findNearbyPlaces = async (location, category, types) => {
-    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-    const url = "https://places.googleapis.com/v1/places:searchNearby"
-
-    const reqBody = {
-      includedTypes: types.includedTypes,
-      excludedTypes: types.excludedTypes,
-      maxResultCount: 20,
-      locationRestriction: {
-        circle: {
-          center: {
-            latitude: location.lat,
-            longitude: location.lng
-          },
-          radius: 5000
-        },
-      }
+  useEffect(() => {
+    if (!isPoisEmpty()) {
+      setClick(true); // Show suggestions if POIs exist from previous session
     }
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": API_KEY,
-        "X-Goog-FieldMask": "places.id,places.displayName,places.types,places.formattedAddress,places.location,places.photos,places.generativeSummary,places.editorialSummary,places.rating,places.priceLevel",
-      },
-      body: JSON.stringify(reqBody),
-    };
-    try {
-      const response = await fetch(url, options);
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      setPois((prevPois) => ({
-        ...prevPois,
-        [category]: [...prevPois[category], ...(data.places || [])],
-      }))
-
-    } catch (error) {
-      console.error("Could not fetch nearby places:", error);
-      return null;
-    }
-  }
+  }, [isPoisEmpty]);
 
   const handleSubmitDestination = (e) => {
     e.preventDefault();
     setClick(true);
-
-    console.log(selectedPlace)
-
+    
     if (selectedPlace && selectedPlace.geometry) {
       const location = {
         lat: selectedPlace.geometry.location.lat(),
         lng: selectedPlace.geometry.location.lng()
       };
 
+      // delete current pois otherwise new destination search will append to current pois
+      deletePois()
+
       for (const category in categoryTypes) {
         if (categoryTypes.hasOwnProperty(category)) {
-          // grab all nearby places for this category 
-          findNearbyPlaces(location, category, categoryTypes[category])
+          findPois(location, category, categoryTypes[category])
         }
       }  
+
+      updateDestinationName(selectedPlace.name)
+      updateDuration(duration, timeType)
     } else {
       console.warn("No place selected.");
     }
@@ -96,8 +54,7 @@ const TripinaryMain = () => {
   const handleSubmitItinerary = (e) => {
     e.preventDefault()
     
-    if(!!!selectedPlace)
-      window.alert("There is no destination selected yet!")
+    // MAKE AI API CALLS HERE TO TRANSFORM itineraryForm INTO AN ITINERARY
   }
 
 
@@ -158,7 +115,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions pois={pois} destination={selectedPlace.name} />
+              <Activity_Suggestions pois={pois} destination={itineraryForm.destinationName} />
             </motion.div>
           )}
         </AnimatePresence>

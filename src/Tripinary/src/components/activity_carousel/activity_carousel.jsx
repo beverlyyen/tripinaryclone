@@ -26,8 +26,9 @@ function Activity_Carousel({ category, list }) {
           modules={[Navigation]}
           spaceBetween={15}
           slidesPerView={4}
+          slidesPerGroup={4}
           navigation
-          loop
+          // loop
           className="carousel"
         >
           {list.map((attr, i) => (
