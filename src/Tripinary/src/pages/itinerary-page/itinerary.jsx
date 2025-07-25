@@ -27,7 +27,9 @@ function Itinerary() {
 
     return (
         <div className="itinerary-container">
-            <h1>Your Trip Itinerary for {itineraryForm.destinationName || "Your Destination"}</h1>
+            <div class="header-container">
+                <h1>Itinerary for {itineraryForm.destinationName || "Your Destination"}</h1>
+            </div>
             
             {isLoading && <p>Generating your itinerary...</p>}
             {error && <p className="error-message">Error: {error}</p>}
