@@ -38,8 +38,11 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
     if (searchQuery) {
       setSearchInputValue(searchQuery);
       updateMapSource(searchQuery);
+      // Fetch place details for the search term + destination
+      const fullQuery = destinationName ? `${searchQuery} ${destinationName}` : searchQuery;
+      fetchPlaceDetailsByQuery(fullQuery);
     }
-  }, [searchQuery]);
+  }, [searchQuery, destinationName]);
 
   const updateMapSource = (query) => {
     const fullQuery = destinationName ? `${query} ${destinationName}` : query;
@@ -86,6 +89,19 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
       text: "Disappointing experience. Would not recommend.",
     },
   ];
+
+  const fetchPlaceDetailsByQuery = (query) => {
+    fetch(`http://localhost:3000/api/place-details?query=${encodeURIComponent(query)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) setPlaceDetails(data.result);
+        else setPlaceDetails(null);
+      })
+      .catch((err) => {
+        console.error("Error fetching place details by query:", err);
+        setPlaceDetails(null);
+      });
+  };
 
   return (
     <div className={`side-panel-full ${isOpen ? "open" : ""}`}>
