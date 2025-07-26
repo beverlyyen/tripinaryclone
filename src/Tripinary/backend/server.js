@@ -146,25 +146,16 @@ specific places/activities with their Google Place IDs (in square brackets): ${f
     }
 });
 
-const GOOGLE_PLACES_API_KEY = process.env.VITE_GOOGLE_PLACES_API_KEY;
+const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
 app.get('/api/place-details', async (req, res) => {
     const { place_id } = req.query;
     if (!place_id) return res.status(400).json({ error: 'Missing place_id' });
 
-    if (!GOOGLE_PLACES_API_KEY) {
-        console.error("GOOGLE_PLACES_API_KEY is not set in environment variables.");
-        return res.status(500).json({ error: "Google Places API key is missing" });
-    }
-
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLE_PLACES_API_KEY}`;
-    console.log("Fetching place details for:", place_id);
-    
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log("Google API response status:", data.status);
-        
         if (data.status !== "OK") {
             console.error("Google API error:", data);
             return res.status(500).json({ error: "Google API error", details: data });

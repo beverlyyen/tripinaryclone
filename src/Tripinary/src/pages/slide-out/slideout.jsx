@@ -18,32 +18,17 @@ function SidePanel({ isOpen, searchQuery, onClose, place }) {
  useEffect(() => {
   if (!effectivePlaceId) return;
 
-  // Check if the place ID looks valid (Google place IDs are typically long strings)
-  if (effectivePlaceId.length > 20) {
-    setMapSource(
-      `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
-    );
-  } else {
-    // Fallback to a default location if place ID seems invalid
-    setMapSource(
-      `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=Simon+Fraser+University`
-    );
-  }
+  setMapSource(
+    `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
+  );
 
   fetch(`http://localhost:5000/api/place-details?place_id=${effectivePlaceId}`)
     .then((res) => res.json())
     .then((data) => {
-      if (data.result) {
-        setPlaceDetails(data.result);
-      } else if (data.error) {
-        console.error("Google API error:", data.error);
-        // Handle invalid place ID by using default place
-        setPlaceDetails(null);
-      }
+      if (data.result) setPlaceDetails(data.result);
     })
     .catch((err) => {
       console.error("Error fetching place details:", err);
-      setPlaceDetails(null);
     });
 }, [effectivePlaceId]);
 
