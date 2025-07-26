@@ -5,6 +5,20 @@ import magnifierIcon from "../../pages/slide-out/search.png";
 
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
+function renderStars(rating) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+  return (
+    <>
+      {"★".repeat(fullStars)}
+      {halfStar ? "⯨" : ""}
+      {"☆".repeat(emptyStars)}
+    </>
+  );
+}
+
 function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   
   const defaultPlaceId = "ChIJN1t_tDeuEmsRUsoyG83frY4"; 
@@ -152,9 +166,12 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
             <div className="info-text">
               <h3>{placeDetails && placeDetails.name ? placeDetails.name : "Simon Fraser University"}</h3>
               <p className="star">
-                {placeDetails && placeDetails.rating
-                  ? "★".repeat(Math.round(placeDetails.rating)) + "☆".repeat(5 - Math.round(placeDetails.rating))
-                  : "☆☆☆☆☆"}
+                {placeDetails && placeDetails.rating ? (
+                  <>
+                    {renderStars(placeDetails.rating)}
+                    <span style={{ marginLeft: "0.5em", fontWeight: 500 }}>{placeDetails.rating.toFixed(1)}</span>
+                  </>
+                ) : "☆☆☆☆☆"}
               </p>
               <p>
                 {placeDetails && placeDetails.formatted_address
