@@ -8,22 +8,19 @@ const Footer = () => {
         <div className = "footer-section">
             <h4>CONTRIBUTORS</h4>  
             <ul>
-            <li>John Camino</li>
-            <li>Lilian Pham</li>
-            <li>Beverly Yen</li>
-            <li>Renz Gabrinao</li>
+            <li><a href = "https://jcmno.github.io">John Camino</a></li>
+            <li><a href = "https://github.com/lilian-pham">Lilian Pham</a></li>
+            <li><a href = "https://github.com/beverlyyen">Beverly Yen</a></li>
+            <li><a href = "https://github.com/renzgabrinao">Renz Gabrinao</a></li>
             </ul>
         </div>
 
-         <div className = "footer-section">
-            <h4>CONTACT US</h4>
-            <p></p>
-        </div>
+        
 
         <div className = "footer-section">
             <h4>PROJECT LINKS</h4>
             <ul>
-            <li>TRIPINARY GitHub</li>
+            <li><a href = "https://github.com/CMPT-276-SUMMER-2025/final-project-02-peak">Tripinary GitHub</a></li>
             </ul>
         </div>
 
