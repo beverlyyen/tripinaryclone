@@ -63,6 +63,8 @@ app.post('/api/generate-itinerary', async (req, res) => {
     activities are relevant to the area and complement the provided places.
     Try to group geographically close activities and consider travel time between places.
 
+    Make sure that each activity has a specific location as well, (e.g Lunch at Social House, Dinner at The Keg instead of just Lunch at Granville Island)
+
     Format the entire output strictly as a JSON array of daily itinerary objects.
     Each daily object MUST have a "day" string (e.g., "Day 1", "Day 2") and an "items" array.
     Each item in the "items" array MUST have a "time" string (e.g., "08:00", "12:30") and an "activity" string.
