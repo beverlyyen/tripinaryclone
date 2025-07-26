@@ -10,7 +10,7 @@ export default function DayCard({ day, items, onSelectPlace }) {
                 <ul>
                     {items && items.length > 0 ? (
                         items.map((entry, index) => (
-                            <li key={index} onClick={() => onSelectPlace && onSelectPlace(entry.place)}>
+                            <li key={index} onClick={() => onSelectPlace(entry)}>
                                 <strong>{entry.time}</strong>: {entry.activity}
                             </li>
                         ))

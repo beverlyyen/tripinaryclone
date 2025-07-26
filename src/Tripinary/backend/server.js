@@ -3,13 +3,12 @@ const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
-const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: 'http://localhost:5173', 
+    origin: 'http://localhost:5173',
     methods: 'POST',
     optionsSuccessStatus: 200
 };
@@ -24,8 +23,8 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/generate-itinerary', apiLimiter);
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; 
-const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"; 
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const AI_MODEL = "qwen/qwen3-coder:free";
 
 app.post('/api/generate-itinerary', async (req, res) => {
@@ -46,15 +45,17 @@ app.post('/api/generate-itinerary', async (req, res) => {
         return res.status(500).json({ message: "Backend error: OpenRouter API key is missing." });
     }
 
+
     const formattedPlaces = selectedPlaces.map(place => {
         const name = place.displayName?.text || place.name || 'Unnamed Place';
         const address = place.formattedAddress ? ` (${place.formattedAddress})` : '';
-        return `- ${name}${address}`; 
+        const placeId = place.place_id ? ` [${place.place_id}]` : '';
+        return `- ${name}${address}${placeId}`;
     }).join('\n');
 
     const promptContent = `Generate a ${duration.num} ${duration.timeType} itinerary
     for a trip to ${destinationName}. The itinerary MUST include the following
-    specific places/activities: ${formattedPlaces}
+specific places/activities with their Google Place IDs (in square brackets): ${formattedPlaces}
 
     For each day, assign a reasonable time to each activity.
     If there are not enough activities for the duration, or if a day has fewer than 3 activities,
@@ -65,7 +66,7 @@ app.post('/api/generate-itinerary', async (req, res) => {
 
     Format the entire output strictly as a JSON array of daily itinerary objects.
     Each daily object MUST have a "day" string (e.g., "Day 1", "Day 2") and an "items" array.
-    Each item in the "items" array MUST have a "time" string (e.g., "08:00", "12:30") and an "activity" string.
+    Each item in the "items" array MUST have a "time" string (e.g., "08:00", "12:30") and an "activity" string and a "place_id" string ONLY IF it was one of the originally provided places above.
     
     DO NOT include any introductory or concluding text, explanations, or conversational filler.
     DO NOT wrap the JSON in markdown code blocks (e.g., NO \`\`\`json\`\`\` or similar).
@@ -91,25 +92,25 @@ app.post('/api/generate-itinerary', async (req, res) => {
         }
 
         const openRouterJson = await openRouterResponse.json();
-        
+
         if (!openRouterJson.choices || !openRouterJson.choices[0] || !openRouterJson.choices[0].message) {
             console.error("Unexpected OpenRouter API response structure:", openRouterJson);
             throw new Error("OpenRouter API returned an unexpected response structure.");
         }
-        
+
         const aiOutput = openRouterJson.choices[0].message.content;
 
         let cleanJsonResponse = aiOutput;
         if (cleanJsonResponse.startsWith('```json') && cleanJsonResponse.endsWith('```')) {
             const jsonStart = cleanJsonResponse.indexOf('\n');
-            const jsonEnd = cleanJsonResponse.lastIndexOf('```'); 
+            const jsonEnd = cleanJsonResponse.lastIndexOf('```');
             if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
                 cleanJsonResponse = cleanJsonResponse.substring(jsonStart + 1, jsonEnd).trim();
             } else {
                 console.warn("AI response started with ```json and ended with ``` but format was unexpected. Attempting to parse original.");
             }
         } else if (cleanJsonResponse.startsWith('```') && cleanJsonResponse.endsWith('```')) {
-             // Handle cases where it's just ``` and not ```json
+            // Handle cases where it's just ``` and not ```json
             const jsonStart = cleanJsonResponse.indexOf('\n');
             const jsonEnd = cleanJsonResponse.lastIndexOf('```');
             if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
@@ -124,7 +125,7 @@ app.post('/api/generate-itinerary', async (req, res) => {
 
         let itineraryData;
         try {
-            itineraryData = JSON.parse(cleanJsonResponse); 
+            itineraryData = JSON.parse(cleanJsonResponse);
         } catch (parseError) {
             console.error("Failed to parse AI's JSON response:", parseError);
             console.error("AI Response that caused parsing error (cleaned):", cleanJsonResponse);
@@ -138,23 +139,32 @@ app.post('/api/generate-itinerary', async (req, res) => {
 
     } catch (error) {
         console.error('Error in /api/generate-itinerary endpoint:', error);
-        res.status(500).json({ 
-            message: 'Internal server error while generating itinerary.', 
-            details: error.message 
+        res.status(500).json({
+            message: 'Internal server error while generating itinerary.',
+            details: error.message
         });
     }
 });
 
-const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+const GOOGLE_PLACES_API_KEY = process.env.VITE_GOOGLE_PLACES_API_KEY;
 
 app.get('/api/place-details', async (req, res) => {
     const { place_id } = req.query;
     if (!place_id) return res.status(400).json({ error: 'Missing place_id' });
 
+    if (!GOOGLE_PLACES_API_KEY) {
+        console.error("GOOGLE_PLACES_API_KEY is not set in environment variables.");
+        return res.status(500).json({ error: "Google Places API key is missing" });
+    }
+
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLE_PLACES_API_KEY}`;
+    console.log("Fetching place details for:", place_id);
+    
     try {
         const response = await fetch(url);
         const data = await response.json();
+        console.log("Google API response status:", data.status);
+        
         if (data.status !== "OK") {
             console.error("Google API error:", data);
             return res.status(500).json({ error: "Google API error", details: data });
@@ -167,7 +177,7 @@ app.get('/api/place-details', async (req, res) => {
 });
 
 app.use((err, res) => {
-    console.error(err.stack); 
+    console.error(err.stack);
     res.status(500).send('Something went wrong on the server!');
 });
 
@@ -176,7 +186,7 @@ app.listen(PORT, () => {
 });
 
 app.use((err, res) => {
-    console.error(err.stack); 
+    console.error(err.stack);
     res.status(500).send('Something went wrong on the server!');
 });
 

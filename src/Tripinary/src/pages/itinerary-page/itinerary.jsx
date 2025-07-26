@@ -20,10 +20,19 @@ function Itinerary() {
     const [selectedPlaceForPanel, setSelectedPlaceForPanel] = useState(null);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     
-    const handleSelectPlaceForPanel = (place) => {
-        setSelectedPlaceForPanel(place);
+const handleSelectPlaceForPanel = (item) => {
+    console.log("Clicked item:", item);
+
+    if (item.place_id) {
+        setSelectedPlaceForPanel(item); // Pass the full item with place_id
         setIsPanelOpen(true);
-    };
+    } else {
+        alert("This activity does not have a linked place_id.");
+    }
+};
+
+
+    
 
     const handleClosePanel = () => {
         setIsPanelOpen(false);
