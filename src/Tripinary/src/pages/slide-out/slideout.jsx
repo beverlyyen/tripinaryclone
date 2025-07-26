@@ -13,6 +13,7 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   const [mapSource, setMapSource] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [placeDetails, setPlaceDetails] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
 
 
@@ -82,19 +83,24 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   ];
 
   const fetchPlaceDetailsByQuery = (query) => {
+    setErrorMessage(""); 
     fetch(`http://localhost:5000/api/place-details?query=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
           console.log("Fetched place details:", data.result);
           setPlaceDetails(data.result);
+          setErrorMessage(""); // Clear error on success
         } else {
+          console.log("No place found for query:", query);
           setPlaceDetails(null);
+          setErrorMessage(`No place found for "${query}". Please try a different search term.`);
         }
       })
       .catch((err) => {
         console.error("Error fetching place details by query:", err);
         setPlaceDetails(null);
+        setErrorMessage(`Error searching for "${query}". Please check your internet connection and try again.`);
       });
   };
 
@@ -137,6 +143,11 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
         </div>
 
         <div className="right-panel">
+          {errorMessage && (
+            <div className="error-message">
+              {errorMessage}
+            </div>
+          )}
           <div className="info-card">
             <div className="info-text">
               <h3>{placeDetails && placeDetails.name ? placeDetails.name : "Simon Fraser University"}</h3>
