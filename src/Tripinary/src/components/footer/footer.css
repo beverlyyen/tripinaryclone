@@ -1,7 +1,7 @@
 .footer-container{
     display: flex;
     justify-content: space-evenly;
-    background-color: #1d4b1676;
+    background-color: #43633e20;
     color: black;
     font-family: Arial;
     padding: 2em;
@@ -39,5 +39,14 @@
   max-width: 100%;  
 }
 
+.footer-container li{
+    color: blue;
+}
 
+.footer-container a,
+.footer-container a:visited,
+.navbar a:active{
+    color: blue;
+    text-decoration: none;
+}
 
