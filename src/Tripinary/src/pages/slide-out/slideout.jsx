@@ -14,24 +14,6 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [placeDetails, setPlaceDetails] = useState(null);
 
-  // Update map and details when placeId changes
- useEffect(() => {
-  if (!effectivePlaceId) return;
-
-  setMapSource(
-    `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
-  );
-
-  fetch(`http://localhost:3000/api/place-details?place_id=${effectivePlaceId}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.result) setPlaceDetails(data.result);
-    })
-    .catch((err) => {
-      console.error("Error fetching place details:", err);
-    });
-}, [effectivePlaceId]);
-
 
 
   useEffect(() => {
@@ -44,6 +26,12 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
     }
   }, [searchQuery, destinationName]);
 
+  useEffect(() => {
+    if (placeDetails) {
+      console.log("placeDetails updated:", placeDetails);
+    }
+  }, [placeDetails]);
+
   const updateMapSource = (query) => {
     const fullQuery = destinationName ? `${query} ${destinationName}` : query;
     const encodedQuery = encodeURIComponent(fullQuery);
@@ -55,6 +43,9 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
 
   const handleSearch = () => {
     updateMapSource(searchInputValue);
+    // Fetch place details for the manual search
+    const fullQuery = destinationName ? `${searchInputValue} ${destinationName}` : searchInputValue;
+    fetchPlaceDetailsByQuery(fullQuery);
   };
 
   const reviews = [
@@ -91,11 +82,15 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   ];
 
   const fetchPlaceDetailsByQuery = (query) => {
-    fetch(`http://localhost:3000/api/place-details?query=${encodeURIComponent(query)}`)
+    fetch(`http://localhost:5000/api/place-details?query=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.result) setPlaceDetails(data.result);
-        else setPlaceDetails(null);
+        if (data.result) {
+          console.log("Fetched place details:", data.result);
+          setPlaceDetails(data.result);
+        } else {
+          setPlaceDetails(null);
+        }
       })
       .catch((err) => {
         console.error("Error fetching place details by query:", err);

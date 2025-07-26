@@ -148,21 +148,30 @@ app.post('/api/generate-itinerary', async (req, res) => {
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
 app.get('/api/place-details', async (req, res) => {
-    const { place_id } = req.query;
-    if (!place_id) return res.status(400).json({ error: 'Missing place_id' });
+    const { query } = req.query;
+    if (!query) return res.status(400).json({ error: 'Missing query' });
 
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLE_PLACES_API_KEY}`;
+    // Use Text Search to get a place_id first
+    const textSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&key=${GOOGLE_PLACES_API_KEY}`;
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.status !== "OK") {
-            console.error("Google API error:", data);
-            return res.status(500).json({ error: "Google API error", details: data });
+        const textSearchResponse = await fetch(textSearchUrl);
+        const textSearchData = await textSearchResponse.json();
+        if (textSearchData.status !== "OK" || !textSearchData.results.length) {
+            return res.status(404).json({ error: "No place found for query", details: textSearchData });
         }
-        res.json(data);
+        // Use the first result's place_id
+        const foundPlaceId = textSearchData.results[0].place_id;
+        // Now fetch details as usual
+        const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${foundPlaceId}&key=${GOOGLE_PLACES_API_KEY}`;
+        const detailsResponse = await fetch(detailsUrl);
+        const detailsData = await detailsResponse.json();
+        if (detailsData.status !== "OK") {
+            return res.status(500).json({ error: "Google API error (details)", details: detailsData });
+        }
+        return res.json(detailsData);
     } catch (err) {
-        console.error("Error fetching from Google Places API:", err);
-        res.status(500).json({ error: 'Failed to fetch from Google Places API', details: err.message });
+        console.error("Error fetching from Google Places API (text search):", err);
+        return res.status(500).json({ error: 'Failed to fetch from Google Places API (text search)', details: err.message });
     }
 });
 
