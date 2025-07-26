@@ -5,7 +5,7 @@ import magnifierIcon from "../../pages/slide-out/search.png";
 
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
-function SidePanel({ isOpen, searchQuery, onClose, place }) {
+function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   
   const defaultPlaceId = "ChIJN1t_tDeuEmsRUsoyG83frY4"; 
   const effectivePlaceId = place?.place_id || defaultPlaceId;
@@ -22,7 +22,7 @@ function SidePanel({ isOpen, searchQuery, onClose, place }) {
     `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
   );
 
-  fetch(`http://localhost:5000/api/place-details?place_id=${effectivePlaceId}`)
+  fetch(`http://localhost:3000/api/place-details?place_id=${effectivePlaceId}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.result) setPlaceDetails(data.result);
@@ -42,7 +42,8 @@ function SidePanel({ isOpen, searchQuery, onClose, place }) {
   }, [searchQuery]);
 
   const updateMapSource = (query) => {
-    const encodedQuery = encodeURIComponent(query);
+    const fullQuery = destinationName ? `${query} ${destinationName}` : query;
+    const encodedQuery = encodeURIComponent(fullQuery);
     const newLocation = `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=${encodedQuery}`;
     setMapSource(newLocation);
   };

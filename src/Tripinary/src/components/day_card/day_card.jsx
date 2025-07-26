@@ -1,7 +1,7 @@
 import React from "react";
 import "./day_card.css";
 
-export default function DayCard({ day, items, onSelectPlace }) {
+export default function DayCard({ day, items, onSelectActivity }) {
     return (
         <div className="day-row">
             <div className="day-label">{day}</div>
@@ -10,7 +10,7 @@ export default function DayCard({ day, items, onSelectPlace }) {
                 <ul>
                     {items && items.length > 0 ? (
                         items.map((entry, index) => (
-                            <li key={index} onClick={() => onSelectPlace(entry)}>
+                            <li key={index} onClick={() => onSelectActivity(entry.activity)}>
                                 <strong>{entry.time}</strong>: {entry.activity}
                             </li>
                         ))

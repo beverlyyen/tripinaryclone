@@ -49,13 +49,12 @@ app.post('/api/generate-itinerary', async (req, res) => {
     const formattedPlaces = selectedPlaces.map(place => {
         const name = place.displayName?.text || place.name || 'Unnamed Place';
         const address = place.formattedAddress ? ` (${place.formattedAddress})` : '';
-        const placeId = place.place_id ? ` [${place.place_id}]` : '';
-        return `- ${name}${address}${placeId}`;
+        return `- ${name}${address}`;
     }).join('\n');
 
     const promptContent = `Generate a ${duration.num} ${duration.timeType} itinerary
     for a trip to ${destinationName}. The itinerary MUST include the following
-specific places/activities with their Google Place IDs (in square brackets): ${formattedPlaces}
+    specific places/activities: ${formattedPlaces}
 
     For each day, assign a reasonable time to each activity.
     If there are not enough activities for the duration, or if a day has fewer than 3 activities,
@@ -66,7 +65,7 @@ specific places/activities with their Google Place IDs (in square brackets): ${f
 
     Format the entire output strictly as a JSON array of daily itinerary objects.
     Each daily object MUST have a "day" string (e.g., "Day 1", "Day 2") and an "items" array.
-    Each item in the "items" array MUST have a "time" string (e.g., "08:00", "12:30") and an "activity" string and a "place_id" string ONLY IF it was one of the originally provided places above.
+    Each item in the "items" array MUST have a "time" string (e.g., "08:00", "12:30") and an "activity" string.
     
     DO NOT include any introductory or concluding text, explanations, or conversational filler.
     DO NOT wrap the JSON in markdown code blocks (e.g., NO \`\`\`json\`\`\` or similar).

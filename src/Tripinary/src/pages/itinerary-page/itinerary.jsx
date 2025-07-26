@@ -19,6 +19,7 @@ function Itinerary() {
 
     const [selectedPlaceForPanel, setSelectedPlaceForPanel] = useState(null);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     
 const handleSelectPlaceForPanel = (item) => {
     console.log("Clicked item:", item);
@@ -29,6 +30,11 @@ const handleSelectPlaceForPanel = (item) => {
     } else {
         alert("This activity does not have a linked place_id.");
     }
+};
+
+const handleSelectActivity = (activity) => {
+    setSearchQuery(activity);
+    setIsPanelOpen(true);
 };
 
 
@@ -93,7 +99,7 @@ const handleSelectPlaceForPanel = (item) => {
                             key={index}
                             day={dayData.day}
                             items={dayData.items}
-                            onSelectPlace={handleSelectPlaceForPanel}
+                            onSelectActivity={handleSelectActivity}
                         />
                     ))}
                 </div>
@@ -126,6 +132,8 @@ const handleSelectPlaceForPanel = (item) => {
                 isOpen={isPanelOpen}
                 onClose={handleClosePanel}
                 place={selectedPlaceForPanel}
+                searchQuery={searchQuery}
+                destinationName={itineraryForm.destinationName}
             />
         </div>
     );
