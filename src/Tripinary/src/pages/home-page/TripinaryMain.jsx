@@ -11,13 +11,15 @@ import categoryTypes from "../../assets/category_types.json";
 import "./TripinaryMain.css";
 
 const TripinaryMain = () => {
+  const { itineraryForm, updateDestinationName, updateDuration } = useContext(ItineraryContext);
+  const { pois, findPois, deletePois, isPoisEmpty, notification, isVisible } = useContext(PoisContext);
+
   const [clicked, setClick] = useState(false);
   const [duration, setDuration] = useState(0);
   const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
 
-  const { itineraryForm, updateDestinationName, updateDuration } = useContext(ItineraryContext);
-  const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext)
+
 
   useEffect(() => {
     if (!isPoisEmpty()) {
@@ -27,6 +29,13 @@ const TripinaryMain = () => {
 
   const handleSubmitDestination = (e) => {
     e.preventDefault();
+
+    if(selectedPlace === null && duration === 0) {
+      alert("Please enter a city or increase the trip duration.");
+      return;
+    }
+
+
     setClick(true);
     
     if (selectedPlace && selectedPlace.geometry) {
@@ -81,6 +90,7 @@ const TripinaryMain = () => {
               type="number"
               className="number-input"
               placeholder="Enter a number"
+              min={1}
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
             />
@@ -115,7 +125,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions pois={pois} destination={itineraryForm.destinationName} />
+              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destinationName} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -125,6 +135,9 @@ const TripinaryMain = () => {
         <button className="enter-button" onClick={(e) => handleSubmitItinerary(e)}>Generate Itinerary</button>
       </div>
 
+      <div className={`global-notification ${isVisible ? 'show' : ''} ${notification.type}`}>
+      {notification.message}
+      </div>
     </div>
   );
 };

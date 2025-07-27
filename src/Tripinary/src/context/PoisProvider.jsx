@@ -87,11 +87,42 @@ function PoisProvider({ children }) {
     return Object.values(pois).every(arr => arr.length === 0);
   }, [pois]);
 
+  const [notification, setNotification] = useState({"message": null, "type": null}); // { message: '...', type: 'success' }
+  const [isVisible, setIsVisible] = useState(false);
+  const [timerId, setTimerId] = useState(null);
+
+  const showNotification = (message, type = "success", duration = 2000) => {
+    if (timerId)
+      clearTimeout(timerId)
+
+    setNotification({ message, type });
+    setIsVisible(true);
+
+    const newTimerId = setTimeout(() => {
+      setIsVisible(false);
+      setTimeout(() => setNotification({"message": null, "type": null}), 300); // Allow CSS transition to finish
+    }, duration);
+    setTimerId(newTimerId);
+  }
+
+  const hideNotification = () => {
+    setIsVisible(false);
+    if (timerId) {
+      clearTimeout(timerId);
+      setTimerId(null);
+    }
+    setNotification({"message": null, "type": null}); // if you clear after transition
+  }
+
   const contextValue = {
     pois,
     findPois,
     deletePois,
-    isPoisEmpty
+    isPoisEmpty,
+    notification,
+    isVisible,
+    showNotification,
+    hideNotification
   }
 
   return (

@@ -18,9 +18,6 @@ const getCategory = (cat) => {
 }
 
 function Activity_Suggestions({ pois, destination }) {
-
-
-
   return (
     <div className="activity_suggestions">
       <h1>
@@ -29,7 +26,7 @@ function Activity_Suggestions({ pois, destination }) {
       <div>
         {Object.entries(pois).map(([category, places]) => (
           <>
-            <Activity_Carousel category={getCategory(category)} list={places} />
+            <Activity_Carousel key={category} category={getCategory(category)} list={places} />
           </>
         ))}
       </div>

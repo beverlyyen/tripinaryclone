@@ -1,8 +1,9 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { Rating, ThinRoundedStar } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import "./activity_card.css"
 import ItineraryContext from "../../context/ItineraryContext"
+import PoisContext from "../../context/PoisContext"
 
 const priceLevels = {
   PRICE_LEVEL_INEXPENSIVE: '$',
@@ -14,13 +15,16 @@ const priceLevels = {
 const getPriceLevel = (level) => priceLevels[level] || '';
 
 function Activity_Card({id, img, title, desc, rating, price_level, location}) {
-  const { itineraryForm, addSelectedPlace, removeSelectedPlace, isPlaceInForm } = useContext(ItineraryContext)
 
+  const { itineraryForm, addSelectedPlace, removeSelectedPlace, isPlaceInForm } = useContext(ItineraryContext)
+  const { showNotification } = useContext(PoisContext);
   const isSelected = itineraryForm.selectedPlaces.some(place => place.id === id);
   
   const handleClickPlace = (id, title, location) => {
+    let msg;
     if(isPlaceInForm(id)) {
       removeSelectedPlace(id)
+      msg = `${title} removed from itinerary`
     } else {
       addSelectedPlace({ 
         "id": id,
@@ -30,7 +34,9 @@ function Activity_Card({id, img, title, desc, rating, price_level, location}) {
           "lng": location.longitude
         }
       })
+      msg = `${title} added to itinerary`
     }
+    showNotification(msg);
   }
 
   return (
