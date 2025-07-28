@@ -172,6 +172,7 @@ const TripinaryMain = () => {
       </div>
       <div className="submit_area">
         <p>{itineraryForm.selectedPlaces.length} Destinations Selected</p>
+
         
         <button
           onClick={(e) => handleSubmitItinerary(e)}
@@ -184,6 +185,7 @@ const TripinaryMain = () => {
         >
           {itineraryForm.isLoadingItinerary ? "Generating Itinerary..." : "Generate Itinerary"}
         </button>
+
       </div>
     </div>
   );
