@@ -75,7 +75,7 @@ const TripinaryMain = () => {
   const handleSubmitItinerary = async (e) => {
     e.preventDefault(); 
 
-    if (!itineraryForm.destinationName || !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
+    if (!itineraryForm.destination.name|| !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
       alert("Please ensure you have selected a destination, duration, and at least one activity before generating the itinerary.");
       return;
     }
@@ -91,7 +91,7 @@ const TripinaryMain = () => {
         },
         body: JSON.stringify({
           selectedPlaces: itineraryForm.selectedPlaces,
-          destinationName: itineraryForm.destinationName,
+          destinationName: itineraryForm.destination.name,
           duration: itineraryForm.duration,
         }),
       });
@@ -184,7 +184,7 @@ const TripinaryMain = () => {
           onClick={(e) => handleSubmitItinerary(e)}
           disabled={
             itineraryForm.isLoadingItinerary ||    
-            !itineraryForm.destinationName ||        
+            !itineraryForm.destination.name ||        
             !itineraryForm.duration.num ||          
             itineraryForm.selectedPlaces.length === 0 
           }

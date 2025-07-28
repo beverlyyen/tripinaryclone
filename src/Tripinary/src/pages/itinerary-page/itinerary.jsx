@@ -46,7 +46,7 @@ const handleSelectActivity = (activity) => {
     };
 
     const handleSubmitItinerary = async () => {
-        if (!itineraryForm.destinationName || !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
+        if (!itineraryForm.destination.name || !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
           alert("Please ensure you have selected a destination, duration, and at least one activity. You might need to go back to the main page to adjust your selections.");
           return;
         }
@@ -62,7 +62,7 @@ const handleSelectActivity = (activity) => {
                 },
                 body: JSON.stringify({
                     selectedPlaces: itineraryForm.selectedPlaces,
-                    destinationName: itineraryForm.destinationName,
+                    destinationame: itineraryForm.destination.name,
                     duration: itineraryForm.duration,
                 }),
             });
@@ -86,7 +86,7 @@ const handleSelectActivity = (activity) => {
 
     return (
         <div className="itinerary-container">
-            <h1>Your Trip Itinerary for {itineraryForm.destinationName || "Your Destination"}</h1>
+            <h1>Your Trip Itinerary for {itineraryForm.destination.name || "Your Destination"}</h1>
             
             {isLoading ? (
                 <p>Generating your itinerary...</p>
@@ -118,7 +118,7 @@ const handleSelectActivity = (activity) => {
                     onClick={handleSubmitItinerary}
                     disabled={
                         isLoading ||        
-                        !itineraryForm.destinationName ||         
+                        !itineraryForm.destination.name ||         
                         !itineraryForm.duration.num ||            
                         itineraryForm.selectedPlaces.length === 0 
                     }
@@ -133,7 +133,7 @@ const handleSelectActivity = (activity) => {
                 onClose={handleClosePanel}
                 place={selectedPlaceForPanel}
                 searchQuery={searchQuery}
-                destinationName={itineraryForm.destinationName}
+                destinationName={itineraryForm.destination.name}
             />
         </div>
     );

@@ -21,10 +21,10 @@ function ItineraryProvider({ children }) {
   const [itineraryForm, setItineraryForm] = useState(() => {
     try {
       const storedForm = sessionStorage.getItem('tripinaryItineraryForm');
-      return storedForm ? JSON.parse(storedForm) : defaultItineraryForm;
+      return storedForm ? JSON.parse(storedForm) : initialItineraryForm;
     } catch (error) {
       console.error("Failed to load itineraryForm from sessionStorage:", error);
-      return defaultItineraryForm;
+      return initialItineraryForm;
     }
   });
 
