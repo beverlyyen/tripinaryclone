@@ -62,7 +62,7 @@ const handleSelectActivity = (activity) => {
                 },
                 body: JSON.stringify({
                     selectedPlaces: itineraryForm.selectedPlaces,
-                    destinationame: itineraryForm.destination.name,
+                    destinationName: itineraryForm.destination.name,
                     duration: itineraryForm.duration,
                 }),
             });
