@@ -1,11 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ItineraryContext from './ItineraryContext.jsx';
 
-const defaultItineraryForm = {
-  destinationName: null,
+// Define the initial state structure (can be imported from ItineraryContext.js too)
+const initialItineraryForm = {
+  destination: {
+    name: null, // ex. "Vancouver"
+    address: null // ex. "Vancouver, B.C., Canada"
+  },
   duration: {
     num: 0,
-    timeType: null
+    timeType: null // could be "hours", "days", "weeks"
   },
   selectedPlaces: [],
   generatedItinerary: null,  
@@ -32,10 +36,13 @@ function ItineraryProvider({ children }) {
     }
   }, [itineraryForm]);
   
-  const updateDestinationName = useCallback((name) => {
+  const updateDestinationName = useCallback((name, address) => {
     setItineraryForm(prevForm => ({
       ...prevForm,
-      destinationName: name
+      destination: {
+        name: name,
+        address: address
+      }
     }));
   }, []);
 

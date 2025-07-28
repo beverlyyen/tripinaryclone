@@ -12,6 +12,7 @@ import categoryTypes from "../../assets/category_types.json";
 import "./TripinaryMain.css";
 
 const TripinaryMain = () => {
+
   const navigate = useNavigate();
 
   const [clicked, setClick] = useState(false);
@@ -28,7 +29,7 @@ const TripinaryMain = () => {
     setItineraryError       
   } = useContext(ItineraryContext);
 
-  const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext);
+  const { pois, findPois, deletePois, isPoisEmpty, notification, isVisible } = useContext(PoisContext);
 
   useEffect(() => {
     if (!isPoisEmpty()) {
@@ -38,6 +39,13 @@ const TripinaryMain = () => {
 
   const handleSubmitDestination = (e) => {
     e.preventDefault();
+
+    if(selectedPlace === null && duration === 0) {
+      alert("Please enter a city or increase the trip duration.");
+      return;
+    }
+
+    setClick(true);
     
     if (selectedPlace && selectedPlace.geometry) {
       setClick(true);
@@ -55,7 +63,7 @@ const TripinaryMain = () => {
         }
       }  
 
-      updateDestinationName(selectedPlace.displayName?.text || selectedPlace.name);
+      updateDestinationName((selectedPlace.displayName?.text || selectedPlace.name), selectedPlace.formatted_address)
       updateDuration(Number(duration), timeType);
     } else {
       console.warn("No place selected or invalid place data.");
@@ -130,6 +138,7 @@ const TripinaryMain = () => {
               type="number"
               className="number-input"
               placeholder="Enter a number"
+              min={1}
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
             />
@@ -164,16 +173,13 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              {/* Pass POIs and destination name to Activity_Suggestions */}
-              <Activity_Suggestions pois={pois} destination={itineraryForm.destinationName} />
+              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destinationName} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
       <div className="submit_area">
         <p>{itineraryForm.selectedPlaces.length} Destinations Selected</p>
-
-        
         <button
           onClick={(e) => handleSubmitItinerary(e)}
           disabled={
@@ -185,7 +191,9 @@ const TripinaryMain = () => {
         >
           {itineraryForm.isLoadingItinerary ? "Generating Itinerary..." : "Generate Itinerary"}
         </button>
-
+      </div>
+      <div className={`global-notification ${isVisible ? 'show' : ''} ${notification.type}`}>
+        {notification.message}
       </div>
     </div>
   );

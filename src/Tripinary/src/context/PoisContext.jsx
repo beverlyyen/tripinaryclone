@@ -11,7 +11,9 @@ const PoisContext = React.createContext({
   pois: poisFormat,
   findPois: () => {},
   deletePois: () => {},
-  isPoisEmpty: () => {}
+  isPoisEmpty: () => {},
+  showNotification: () => {},
+  hideNotification: () => {},
 });
 
 export default PoisContext;

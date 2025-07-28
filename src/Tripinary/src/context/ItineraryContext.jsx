@@ -3,13 +3,11 @@ import React from 'react';
 const initialItineraryForm = {
   destinationName: null,
   duration: {
-    num: 0,
+    num: null,
     timeType: null // could be "Hours", "Days", "Weeks"
   },
   selectedPlaces: []
 };
-
-
 
 // Create the Context
 const ItineraryContext = React.createContext({
