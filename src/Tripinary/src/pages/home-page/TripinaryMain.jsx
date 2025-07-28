@@ -173,7 +173,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destination.name} />
+              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destination.address} />
             </motion.div>
           )}
         </AnimatePresence>

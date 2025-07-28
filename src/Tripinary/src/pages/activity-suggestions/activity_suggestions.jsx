@@ -21,6 +21,8 @@ function Activity_Suggestions({ pois, destination }) {
 
   const [tips, setTips] = useState("");
 
+const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+
 // 🔌 Fetch travel tip from Qwen (OpenRouter)
   async function fetchTips(destination) {
     try {
@@ -28,7 +30,7 @@ function Activity_Suggestions({ pois, destination }) {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer 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`,        // 🔐 Replace with your actual API key
+          "Authorization": `Bearer ${apiKey}`,        // 🔐 Replace with your actual API key
           "Content-Type": "application/json",
           "HTTP-Referer": "http://localhost:5173/"                 // 🌐 Required for free-tier users
 
