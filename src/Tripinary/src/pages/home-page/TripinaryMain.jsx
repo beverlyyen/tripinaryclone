@@ -1,7 +1,8 @@
 import { React, useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-import Place_AutoComplete from "../../components/place_autocomplete/Place_Autocomplete";
+import Place_AutoComplete from "../../components/place_autocomplete/Place_AutoComplete";
 import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
 
 import ItineraryContext from "../../context/ItineraryContext";
@@ -11,52 +12,100 @@ import categoryTypes from "../../assets/category_types.json";
 import "./TripinaryMain.css";
 
 const TripinaryMain = () => {
+  const navigate = useNavigate();
+
   const [clicked, setClick] = useState(false);
   const [duration, setDuration] = useState(0);
   const [timeType, setTimeType] = useState("days");
   const [selectedPlace, setSelectedPlace] = useState(null);
 
-  const { itineraryForm, updateDestinationName, updateDuration } = useContext(ItineraryContext);
-  const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext)
+  const {
+    itineraryForm,
+    updateDestinationName,
+    updateDuration,
+    setGeneratedItinerary,
+    setIsLoadingItinerary,   
+    setItineraryError       
+  } = useContext(ItineraryContext);
+
+  const { pois, findPois, deletePois, isPoisEmpty } = useContext(PoisContext);
 
   useEffect(() => {
     if (!isPoisEmpty()) {
-      setClick(true); // Show suggestions if POIs exist from previous session
+      setClick(true);
     }
   }, [isPoisEmpty]);
 
   const handleSubmitDestination = (e) => {
     e.preventDefault();
-    setClick(true);
     
     if (selectedPlace && selectedPlace.geometry) {
+      setClick(true);
+      
       const location = {
         lat: selectedPlace.geometry.location.lat(),
         lng: selectedPlace.geometry.location.lng()
       };
 
-      // delete current pois otherwise new destination search will append to current pois
-      deletePois()
+      deletePois(); 
 
       for (const category in categoryTypes) {
         if (categoryTypes.hasOwnProperty(category)) {
-          findPois(location, category, categoryTypes[category])
+          findPois(location, category, categoryTypes[category]);
         }
       }  
 
-      updateDestinationName(selectedPlace.name)
-      updateDuration(duration, timeType)
+      updateDestinationName(selectedPlace.displayName?.text || selectedPlace.name);
+      updateDuration(Number(duration), timeType);
     } else {
-      console.warn("No place selected.");
+      console.warn("No place selected or invalid place data.");
+      alert("Please select a valid destination using the autocomplete search and enter a duration."); // Provide user feedback
+      setClick(false);
     }
   };
 
-  const handleSubmitItinerary = (e) => {
-    e.preventDefault()
-    
-    // MAKE AI API CALLS HERE TO TRANSFORM itineraryForm INTO AN ITINERARY
-  }
+  const handleSubmitItinerary = async (e) => {
+    e.preventDefault(); 
 
+    if (!itineraryForm.destinationName || !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
+      alert("Please ensure you have selected a destination, duration, and at least one activity before generating the itinerary.");
+      return;
+    }
+
+    setIsLoadingItinerary(true);
+    setItineraryError(null);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/generate-itinerary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          selectedPlaces: itineraryForm.selectedPlaces,
+          destinationName: itineraryForm.destinationName,
+          duration: itineraryForm.duration,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'Unknown error from backend.' }));
+        throw new Error(`Backend error! Status: ${response.status} - ${errorData.message || 'Unknown error'}`);
+      }
+
+      const data = await response.json();
+      
+      setGeneratedItinerary(data); 
+      
+      navigate('/itinerary');
+
+    } catch (err) {
+      console.error("Failed to generate itinerary:", err);
+      setItineraryError(err.message);
+      alert(`Error generating itinerary: ${err.message}`); 
+    } finally {
+    }
+  };
 
   return (
     <div className="tripinarymain">
@@ -115,6 +164,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
+              {/* Pass POIs and destination name to Activity_Suggestions */}
               <Activity_Suggestions pois={pois} destination={itineraryForm.destinationName} />
             </motion.div>
           )}
@@ -122,9 +172,21 @@ const TripinaryMain = () => {
       </div>
       <div className="submit_area">
         <p>{itineraryForm.selectedPlaces.length} Destinations Selected</p>
-        <button className="enter-button" onClick={(e) => handleSubmitItinerary(e)}>Generate Itinerary</button>
-      </div>
 
+        
+        <button
+          onClick={(e) => handleSubmitItinerary(e)}
+          disabled={
+            itineraryForm.isLoadingItinerary ||    
+            !itineraryForm.destinationName ||        
+            !itineraryForm.duration.num ||          
+            itineraryForm.selectedPlaces.length === 0 
+          }
+        >
+          {itineraryForm.isLoadingItinerary ? "Generating Itinerary..." : "Generate Itinerary"}
+        </button>
+
+      </div>
     </div>
   );
 };

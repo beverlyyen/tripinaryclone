@@ -1,28 +1,29 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ItineraryContext from './ItineraryContext.jsx';
 
-// Define the initial state structure (can be imported from ItineraryContext.js too)
-const initialItineraryForm = {
+const defaultItineraryForm = {
   destinationName: null,
   duration: {
     num: 0,
-    timeType: null // could be "Hours", "Days", "Weeks"
+    timeType: null
   },
-  selectedPlaces: []
+  selectedPlaces: [],
+  generatedItinerary: null,  
+  isLoadingItinerary: false,  
+  itineraryError: null,     
 };
 
 function ItineraryProvider({ children }) {
   const [itineraryForm, setItineraryForm] = useState(() => {
     try {
-      const savedItineraryForm = sessionStorage.getItem('tripinaryItineraryForm');
-      return savedItineraryForm ? JSON.parse(savedItineraryForm) : initialItineraryForm;
+      const storedForm = sessionStorage.getItem('tripinaryItineraryForm');
+      return storedForm ? JSON.parse(storedForm) : defaultItineraryForm;
     } catch (error) {
       console.error("Failed to load itineraryForm from sessionStorage:", error);
-      return initialItineraryForm;
+      return defaultItineraryForm;
     }
   });
 
-  // Save itineraryForm to session storage whenever 'itineraryForm' changes
   useEffect(() => {
     try {
       sessionStorage.setItem('tripinaryItineraryForm', JSON.stringify(itineraryForm));
@@ -51,7 +52,7 @@ function ItineraryProvider({ children }) {
   const addSelectedPlace = useCallback((place) => {
     setItineraryForm(prevForm => {
       if (prevForm.selectedPlaces.some(p => p.id === place.id)) {
-        return prevForm; // current place already exists
+        return prevForm;
       }
       return {
         ...prevForm,
@@ -72,20 +73,48 @@ function ItineraryProvider({ children }) {
   }, [itineraryForm.selectedPlaces]);
 
   const clearItineraryForm = useCallback(() => {
-    setItineraryForm(initialItineraryForm);
+    setItineraryForm(defaultItineraryForm); 
     sessionStorage.removeItem('tripinaryItineraryForm');
   }, []);
-  
+
+  const setGeneratedItinerary = useCallback((itineraryData) => { // for itineraru data
+    setItineraryForm(prevForm => ({
+      ...prevForm,
+      generatedItinerary: itineraryData,
+      isLoadingItinerary: false,
+      itineraryError: null,   
+    }));
+  }, []);
+
+  const setIsLoadingItinerary = useCallback((isLoading) => {
+    setItineraryForm(prevForm => ({
+      ...prevForm,
+      isLoadingItinerary: isLoading,
+      itineraryError: null,
+    }));
+  }, []);
+
+  const setItineraryError = useCallback((error) => {
+    setItineraryForm(prevForm => ({
+      ...prevForm,
+      itineraryError: error,
+      isLoadingItinerary: false,
+      generatedItinerary: null,
+    }));
+  }, []);
 
   const contextValue = {
     itineraryForm,
-    setItineraryForm,
+    setItineraryForm, 
     updateDestinationName,
     updateDuration,
     addSelectedPlace,
     removeSelectedPlace,
     isPlaceInForm,
-    clearItineraryForm
+    clearItineraryForm,
+    setGeneratedItinerary,   
+    setIsLoadingItinerary, 
+    setItineraryError
   };
 
   return (

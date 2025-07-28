@@ -5,42 +5,51 @@ import magnifierIcon from "../../pages/slide-out/search.png";
 
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
 
-function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
+function renderStars(rating) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.25 && rating - fullStars < 0.75;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+  return (
+    <>
+      {"★".repeat(fullStars)}
+      {halfStar ? "⯨" : ""}
+      {"☆".repeat(emptyStars)}
+    </>
+  );
+}
+
+function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
   
   const defaultPlaceId = "ChIJN1t_tDeuEmsRUsoyG83frY4"; 
-  const effectivePlaceId = placeId || defaultPlaceId;
+  const effectivePlaceId = place?.place_id || defaultPlaceId;
 
   const [mapSource, setMapSource] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const [placeDetails, setPlaceDetails] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Update map and details when placeId changes
-  useEffect(() => {
-
-    setMapSource(
-      `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=place_id:${effectivePlaceId}`
-    );
-
-    fetch(`http://localhost:3000/api/place-details?place_id=${effectivePlaceId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.result) setPlaceDetails(data.result);
-      })
-      .catch((err) => {
-        console.error("Error fetching place details:", err);
-      });
-  }, [effectivePlaceId]);
 
 
   useEffect(() => {
     if (searchQuery) {
       setSearchInputValue(searchQuery);
       updateMapSource(searchQuery);
+      // Fetch place details for the search term + destination
+      const fullQuery = destinationName ? `${searchQuery} ${destinationName}` : searchQuery;
+      fetchPlaceDetailsByQuery(fullQuery);
     }
-  }, [searchQuery]);
+  }, [searchQuery, destinationName]);
+
+  useEffect(() => {
+    if (placeDetails) {
+      console.log("placeDetails updated:", placeDetails);
+    }
+  }, [placeDetails]);
 
   const updateMapSource = (query) => {
-    const encodedQuery = encodeURIComponent(query);
+    const fullQuery = destinationName ? `${query} ${destinationName}` : query;
+    const encodedQuery = encodeURIComponent(fullQuery);
     const newLocation = `https://www.google.com/maps/embed/v1/place?key=${APIKEY}&q=${encodedQuery}`;
     setMapSource(newLocation);
   };
@@ -49,6 +58,9 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
 
   const handleSearch = () => {
     updateMapSource(searchInputValue);
+    // Fetch place details for the manual search
+    const fullQuery = destinationName ? `${searchInputValue} ${destinationName}` : searchInputValue;
+    fetchPlaceDetailsByQuery(fullQuery);
   };
 
   const reviews = [
@@ -83,6 +95,28 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
       text: "Disappointing experience. Would not recommend.",
     },
   ];
+
+  const fetchPlaceDetailsByQuery = (query) => {
+    setErrorMessage(""); 
+    fetch(`http://localhost:5000/api/place-details?query=${encodeURIComponent(query)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          console.log("Fetched place details:", data.result);
+          setPlaceDetails(data.result);
+          setErrorMessage(""); // Clear error on success
+        } else {
+          console.log("No place found for query:", query);
+          setPlaceDetails(null);
+          setErrorMessage(`No place found for "${query}". Please try a different search term.`);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching place details by query:", err);
+        setPlaceDetails(null);
+        setErrorMessage(`Error searching for "${query}". Please check your internet connection and try again.`);
+      });
+  };
 
   return (
     <div className={`side-panel-full ${isOpen ? "open" : ""}`}>
@@ -123,13 +157,21 @@ function SidePanel({ isOpen, searchQuery, onClose, placeId }) {
         </div>
 
         <div className="right-panel">
+          {errorMessage && (
+            <div className="error-message">
+              {errorMessage}
+            </div>
+          )}
           <div className="info-card">
             <div className="info-text">
               <h3>{placeDetails && placeDetails.name ? placeDetails.name : "Simon Fraser University"}</h3>
               <p className="star">
-                {placeDetails && placeDetails.rating
-                  ? "★".repeat(Math.round(placeDetails.rating)) + "☆".repeat(5 - Math.round(placeDetails.rating))
-                  : "☆☆☆☆☆"}
+                {placeDetails && placeDetails.rating ? (
+                  <>
+                    {renderStars(placeDetails.rating)}
+                    <span style={{ marginLeft: "0.5em", fontWeight: 500 }}>{placeDetails.rating.toFixed(1)}</span>
+                  </>
+                ) : "☆☆☆☆☆"}
               </p>
               <p>
                 {placeDetails && placeDetails.formatted_address
