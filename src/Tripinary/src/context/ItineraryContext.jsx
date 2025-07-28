@@ -1,12 +1,18 @@
 import React from 'react';
 
 const initialItineraryForm = {
-  destinationName: null,
-  duration: {
-    num: null,
-    timeType: null // could be "Hours", "Days", "Weeks"
+  destination: {
+    name: null, // ex. "Vancouver"
+    address: null // ex. "Vancouver, B.C., Canada"
   },
-  selectedPlaces: []
+  duration: {
+    num: 0,
+    timeType: null // could be "hours", "days", "weeks"
+  },
+  selectedPlaces: [],
+  generatedItinerary: null,  
+  isLoadingItinerary: false,  
+  itineraryError: null,     
 };
 
 // Create the Context
