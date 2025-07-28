@@ -3,10 +3,13 @@ import ItineraryContext from './ItineraryContext.jsx';
 
 // Define the initial state structure (can be imported from ItineraryContext.js too)
 const initialItineraryForm = {
-  destinationName: null,
+  destination: {
+    name: null, // ex. "Vancouver"
+    address: null // ex. "Vancouver, B.C., Canada"
+  },
   duration: {
     num: 0,
-    timeType: null // could be "Hours", "Days", "Weeks"
+    timeType: null // could be "hours", "days", "weeks"
   },
   selectedPlaces: []
 };
@@ -31,10 +34,13 @@ function ItineraryProvider({ children }) {
     }
   }, [itineraryForm]);
   
-  const updateDestinationName = useCallback((name) => {
+  const updateDestinationName = useCallback((name, address) => {
     setItineraryForm(prevForm => ({
       ...prevForm,
-      destinationName: name
+      destination: {
+        name: name,
+        address: address
+      }
     }));
   }, []);
 

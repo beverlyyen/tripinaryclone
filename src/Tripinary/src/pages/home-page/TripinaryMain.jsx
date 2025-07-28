@@ -53,7 +53,7 @@ const TripinaryMain = () => {
         }
       }  
 
-      updateDestinationName(selectedPlace.name)
+      updateDestinationName(selectedPlace.name, selectedPlace.formatted_address)
       updateDuration(duration, timeType)
     } else {
       console.warn("No place selected.");
