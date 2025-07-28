@@ -1,72 +1,140 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import ItineraryContext from "../../context/ItineraryContext.jsx";
 import DayCard from "../../components/day_card/day_card";
 import "./itinerary.css";
 import SidePanel from "../slide-out/slideout";
 
-const itineraryData = {
-    destination: "Vancouver",
-    days: [
-        {
-            day: "Day 1",
-            items: [
-                { time: "08:00", activity: "Visit Stanley Park" },
-                { time: "09:00", activity: "Explore Gastown" },
-                { time: "10:00", activity: "Coffee at Tim Hortons" },
-            ],
-        },
-        {
-            day: "Day 2",
-            items: [
-                { time: "08:00", activity: "Visit Burnaby Park Conservation" },
-                { time: "09:00", activity: "SFU Mountain Hike" },
-                { time: "10:00", activity: "Lunch at Cactus Club" },
-            ],
-        },
-        {
-            day: "Day 3",
-            items: [
-                { time: "08:00", activity: "Kitsilano Beach Morning Walk" },
-                { time: "09:00", activity: "Yoga by the ocean" },
-                { time: "10:00", activity: "Brunch at Local" },
-            ],
-        },
-    ],
+function Itinerary() {
+    const { 
+        itineraryForm,
+        setGeneratedItinerary,
+        setIsLoadingItinerary,
+        setItineraryError        
+    } = useContext(ItineraryContext);
+
+    const itinerary = itineraryForm.generatedItinerary;
+    const isLoading = itineraryForm.isLoadingItinerary;
+    const error = itineraryForm.itineraryError;
+    const placesToItinerize = itineraryForm.selectedPlaces; 
+
+    const [selectedPlaceForPanel, setSelectedPlaceForPanel] = useState(null);
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    
+const handleSelectPlaceForPanel = (item) => {
+    console.log("Clicked item:", item);
+
+    if (item.place_id) {
+        setSelectedPlaceForPanel(item); // Pass the full item with place_id
+        setIsPanelOpen(true);
+    } else {
+        alert("This activity does not have a linked place_id.");
+    }
 };
 
-function Itinerary() {
+const handleSelectActivity = (activity) => {
+    setSearchQuery(activity);
+    setIsPanelOpen(true);
+};
 
-    const [mapLocation, setupMapLocation] = useState("");
 
-    const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+    
 
-    const handleItemClick = (activity) => {
-        setSearchQuery(activity);
-        setIsSidePanelOpen(true);
+    const handleClosePanel = () => {
+        setIsPanelOpen(false);
+        setSelectedPlaceForPanel(null);
+    };
+
+    const handleSubmitItinerary = async () => {
+        if (!itineraryForm.destinationName || !itineraryForm.duration.num || itineraryForm.selectedPlaces.length === 0) {
+          alert("Please ensure you have selected a destination, duration, and at least one activity. You might need to go back to the main page to adjust your selections.");
+          return;
+        }
+
+        setIsLoadingItinerary(true);
+        setItineraryError(null); 
+
+        try {
+            const response = await fetch("http://localhost:5000/api/generate-itinerary", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    selectedPlaces: itineraryForm.selectedPlaces,
+                    destinationName: itineraryForm.destinationName,
+                    duration: itineraryForm.duration,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: 'Unknown error from backend.' }));
+                throw new Error(`Backend error! Status: ${response.status} - ${errorData.message || 'Unknown error'}`);
+            }
+
+            const data = await response.json();
+            setGeneratedItinerary(data); 
+
+        } catch (err) {
+            console.error("Failed to generate itinerary:", err);
+            setItineraryError(err.message);
+            alert(`Error generating itinerary: ${err.message}`);
+        } finally {
+        }
     };
 
 
     return (
         <div className="itinerary-container">
-            <SidePanel isOpen={isSidePanelOpen} searchQuery={searchQuery} onClose={() => setIsSidePanelOpen(false)} />
-            <div className="itinerary-header">
-                <h1>Itinerary</h1>
-                <p>Trip to... {itineraryData.destination}</p>
+            <h1>Your Trip Itinerary for {itineraryForm.destinationName || "Your Destination"}</h1>
+            
+            {isLoading ? (
+                <p>Generating your itinerary...</p>
+            ) : error ? (
+                <p className="error-message">Error: {error}</p>
+            ) : itinerary && itinerary.length > 0 ? (
+                <div className="itinerary-days-container">
+                    {itinerary.map((dayData, index) => (
+                        <DayCard
+                            key={index}
+                            day={dayData.day}
+                            items={dayData.items}
+                            onSelectActivity={handleSelectActivity}
+                        />
+                    ))}
+                </div>
+            ) : (
+                placesToItinerize.length > 0 ? (
+                    <div className="itinerary-button">
+                        <p>Regenerating itinerary...</p>
+                    </div>
+                ) : (
+                    <p>No itinerary available. Please select destinations/activities on the previous screen to generate one!</p>
+                )
+            )}
+
+            <div className="regenerate-button-container">
+                <button
+                    onClick={handleSubmitItinerary}
+                    disabled={
+                        isLoading ||        
+                        !itineraryForm.destinationName ||         
+                        !itineraryForm.duration.num ||            
+                        itineraryForm.selectedPlaces.length === 0 
+                    }
+                    className="regenerate-button"
+                >
+                    {isLoading ? "Regenerating..." : "Regenerate ↻"}
+                </button>
             </div>
 
-            {itineraryData.days.map((day, index) => (
-                <DayCard
-                    key={index}
-                    title={day.day}
-                    times={day.items}
-                    place={itineraryData.destination}
-                    onItemClick={handleItemClick}
-                />
-            ))}
-
-            <div className="itinerary-button">
-                <button className="regenerate-button">Regenerate ↺</button>
-            </div>
+            <SidePanel
+                isOpen={isPanelOpen}
+                onClose={handleClosePanel}
+                place={selectedPlaceForPanel}
+                searchQuery={searchQuery}
+                destinationName={itineraryForm.destinationName}
+            />
         </div>
     );
 }
