@@ -1,17 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
-/* * {
-  margin: 0;
-} */
-
+/* Mobile styles */
 .activity_card {
-  height: 450px;
-  width: 300px;
+  height: 300px;
+  width: 200px;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
   transition: transform 0.15s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: white;
   cursor: pointer;
   display: flex;
@@ -31,26 +28,25 @@
 }
 
 .img_container {
-  height: 275px;
-  width: 300px;
+  height: 175px;
+  width: 200px;
 }
 
 .img_container > img {
-  height: 275px;
-  width: 300px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
 .card_details {
-  /* height: 105px; */
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 5px;
 }
 
 .card_details > h2 {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 300;
   text-align: left;
   margin-top: 0;
@@ -58,7 +54,7 @@
 }
 
 .card_details > h3 {
-  font-size: 12px;
+  font-size: 10px;
   text-align: left;
   font-weight: 200;
   margin: 0;
@@ -77,4 +73,53 @@
   white-space: nowrap;
   text-align: center;
   margin: 0;
+}
+
+/* Tablet styles */
+@media (min-width: 600px) {
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .activity_card {
+    height: 350px;
+    width: 220px;
+  }
+
+  .img_container {
+    height: 200px;
+    width: 220px;
+  }
+
+  .card_details {
+    padding: 10px;
+  }
+
+  .card_details > h2 {
+    font-size: 19px;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .card_details > h3 {
+    font-size: 12px;
+    font-weight: 200;
+  }
+}
+
+/* Larger Desktop Styles */
+@media (min-width: 1440px) {
+  .activity_card {
+    height: 450px;
+    width: 300px;
+  }
+
+  .img_container {
+    height: 275px;
+    width: 300px;
+  }
+  .img_container > img {
+    height: 275px;
+    width: 300px;
+  }
 }

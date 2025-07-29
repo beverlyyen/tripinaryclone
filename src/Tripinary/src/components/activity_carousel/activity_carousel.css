@@ -1,18 +1,16 @@
+/* Mobiles Styles */
+
 .carousel-container {
   margin-bottom: 40px;
-
-  /* border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  border-color: red; */
 }
 
 .carousel-container > h1 {
-  margin: 0 0 10px 100px;
+  text-align: center;
+  margin-top: 0;
 }
 
 .carousel-wrapper {
-  padding: 0 100px;
+  padding: 0 10px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -22,24 +20,19 @@
   padding-right: 40px;
 }
 
-
 .activity_card_container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-
-  /* border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  border-color: blue; */
 }
 
-.swiper-button-prev, .swiper-button-next {
+.swiper-button-prev,
+.swiper-button-next {
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  color: #000; /* or any arrow color */
+  color: #000;
 }
 
 .swiper-button-prev {
@@ -47,4 +40,27 @@
 }
 .swiper-button-next {
   right: 10px;
+}
+
+/* Tablet styles */
+@media (min-width: 600px) {
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .carousel-wrapper {
+    padding: 0 20px;
+  }
+
+  .carousel-container > h1 {
+    text-align: left;
+    margin: 0 0 10px 100px;
+  }
+}
+
+/* Larger Desktop Styles */
+@media (min-width: 1440px) {
+  .carousel-wrapper {
+    padding: 0 100px;
+  }
 }
