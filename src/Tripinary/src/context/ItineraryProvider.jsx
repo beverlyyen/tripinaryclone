@@ -80,7 +80,7 @@ function ItineraryProvider({ children }) {
   }, [itineraryForm.selectedPlaces]);
 
   const clearItineraryForm = useCallback(() => {
-    setItineraryForm(initialtineraryForm)
+    setItineraryForm(initialtItineraryForm)
     sessionStorage.removeItem('tripinaryItineraryForm');
   }, []);
 
