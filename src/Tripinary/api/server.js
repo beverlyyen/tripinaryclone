@@ -5,7 +5,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
     origin: ['https://tripinary-one.vercel.app', 'http://localhost:5173'],
@@ -42,7 +41,10 @@ app.post('/api/generate-itinerary', async (req, res) => {
 
     if (!OPENROUTER_API_KEY) {
         console.error("OPENROUTER_API_KEY is not set in environment variables.");
-        return res.status(500).json({ message: "Backend error: OpenRouter API key is missing." });
+        return res.status(500).json({ 
+            message: "Backend error: OpenRouter API key is missing.",
+            details: "Please set OPENROUTER_API_KEY in your Vercel environment variables."
+        });
     }
 
 
@@ -152,6 +154,14 @@ const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 app.get('/api/place-details', async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Missing query' });
+    
+    if (!GOOGLE_PLACES_API_KEY) {
+        console.error("GOOGLE_PLACES_API_KEY is not set in environment variables.");
+        return res.status(500).json({ 
+            error: "Google Places API key is missing.",
+            details: "Please set GOOGLE_PLACES_API_KEY in your Vercel environment variables."
+        });
+    }
 
     // Use Text Search to get a place_id first
     const textSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&key=${GOOGLE_PLACES_API_KEY}`;
@@ -177,9 +187,12 @@ app.get('/api/place-details', async (req, res) => {
     }
 });
 
-app.use((err, res) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong on the server!');
+app.use((err, req, res, next) => {
+    console.error('Error:', err.stack);
+    res.status(500).json({
+        message: 'Internal server error',
+        details: err.message
+    });
 });
 
 module.exports = app;
