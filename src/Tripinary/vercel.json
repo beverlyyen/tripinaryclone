@@ -23,7 +23,7 @@
     
     {
       "src": "/(.*)",
-      "dest": "/src/build/index.html"
+      "dest": "/index.html"
     }
   ]
 }
