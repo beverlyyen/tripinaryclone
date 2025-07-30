@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: tripinary-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false 

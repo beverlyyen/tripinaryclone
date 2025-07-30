@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: 'POST',
+    origin: ['https://tripinary-one.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST'],
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
