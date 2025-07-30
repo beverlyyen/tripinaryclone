@@ -5,11 +5,13 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: 'POST',
+    origin: [
+        'http://localhost:5173',
+        'https://your-vercel-frontend-url.vercel.app' // <-- add your deployed frontend URL here
+    ],
+    methods: ['POST', 'GET', 'OPTIONS'],
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
@@ -182,16 +184,9 @@ app.use((err, res) => {
     res.status(500).send('Something went wrong on the server!');
 });
 
-app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
-});
+// Remove app.listen and error handler at the bottom
+// Instead, export the app for Vercel
 
-app.use((err, res) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong on the server!');
-});
-
-app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
-});
+module.exports = app;
+// or, if using ESM: export default app;
 
