@@ -2,7 +2,7 @@ import { React, useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-import Place_AutoComplete from "../../components/place_autocomplete/Place_AutoComplete";
+import Place_AutoComplete from "../../components/place_autocomplete/Place_Autocomplete";
 import Activity_Suggestions from "../activity-suggestions/activity_suggestions";
 
 import ItineraryContext from "../../context/ItineraryContext";
