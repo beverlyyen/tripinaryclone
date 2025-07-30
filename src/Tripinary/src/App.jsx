@@ -4,7 +4,7 @@ import Navbar from './components/navbar/navbar.jsx'
 import Footer from './components/footer/footer.jsx'
 import TripinaryMain from './pages/home-page/TripinaryMain.jsx'
 import ItineraryPage from "./pages/itinerary-page/itinerary.jsx";
-import ItineraryProvider from './context/ItineraryProvider.jsx';
+import ItineraryProvider from "./context/ItineraryProvider.jsx";
 
 
 import './App.css'
