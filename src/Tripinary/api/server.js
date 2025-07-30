@@ -1,8 +1,10 @@
-const express = require('express');
-const rateLimit = require('express-rate-limit');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -195,4 +197,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
+export default app;
