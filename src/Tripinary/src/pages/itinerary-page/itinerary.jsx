@@ -21,25 +21,22 @@ function Itinerary() {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     
-const handleSelectPlaceForPanel = (item) => {
-    console.log("Clicked item:", item);
+    const handleSelectPlaceForPanel = (item) => {
+        console.log("Clicked item:", item);
 
-    if (item.place_id) {
-        setSelectedPlaceForPanel(item); // Pass the full item with place_id
+        if (item.place_id) {
+            setSelectedPlaceForPanel(item); // Pass the full item with place_id
+            setIsPanelOpen(true);
+        } else {
+            alert("This activity does not have a linked place_id.");
+        }
+    };
+
+    const handleSelectActivity = (activity) => {
+        setSearchQuery(activity);
         setIsPanelOpen(true);
-    } else {
-        alert("This activity does not have a linked place_id.");
-    }
-};
-
-const handleSelectActivity = (activity) => {
-    setSearchQuery(activity);
-    setIsPanelOpen(true);
-};
-
-
+    };
     
-
     const handleClosePanel = () => {
         setIsPanelOpen(false);
         setSelectedPlaceForPanel(null);
@@ -50,8 +47,6 @@ const handleSelectActivity = (activity) => {
           alert("Please ensure you have selected a destination, duration, and at least one activity. You might need to go back to the main page to adjust your selections.");
           return;
         }
-
-        setIsLoadingItinerary(true);
         setItineraryError(null); 
 
         try {
@@ -62,7 +57,7 @@ const handleSelectActivity = (activity) => {
                 },
                 body: JSON.stringify({
                     selectedPlaces: itineraryForm.selectedPlaces,
-                    destinationName: itineraryForm.destination.name,
+                    destinationName: itineraryForm.destination.name, 
                     duration: itineraryForm.duration,
                 }),
             });
@@ -80,6 +75,7 @@ const handleSelectActivity = (activity) => {
             setItineraryError(err.message);
             alert(`Error generating itinerary: ${err.message}`);
         } finally {
+            setIsLoadingItinerary(false); 
         }
     };
 
@@ -89,10 +85,13 @@ const handleSelectActivity = (activity) => {
             <h1>Your Trip Itinerary for {itineraryForm.destination.name || "Your Destination"}</h1>
             
             {isLoading ? (
-                <p>Generating your itinerary...</p>
+                <div className="loading-message-container">
+                    <p>Generating your itinerary... please wait</p>
+                </div>
             ) : error ? (
                 <p className="error-message">Error: {error}</p>
             ) : itinerary && itinerary.length > 0 ? (
+
                 <div className="itinerary-days-container">
                     {itinerary.map((dayData, index) => (
                         <DayCard
@@ -104,13 +103,21 @@ const handleSelectActivity = (activity) => {
                     ))}
                 </div>
             ) : (
+                // This block is for the *initial* state (no itinerary yet) or if generation resulted in empty itinerary
                 placesToItinerize.length > 0 ? (
                     <div className="itinerary-button">
-                        <p>Regenerating itinerary...</p>
+                        <p>Please wait while your new itinerary is being generated...</p>
                     </div>
                 ) : (
                     <p>No itinerary available. Please select destinations/activities on the previous screen to generate one!</p>
                 )
+            )}
+
+            {itinerary && itinerary.length > 0 && !isLoading && !error && (
+                <p className="regenerate-prompt-message">
+                    Not quite what you were looking for? Feel free to try again!
+                    Click the "Regenerate" button below to create a new itinerary with the same activities you selected earlier!
+                </p>
             )}
 
             <div className="regenerate-button-container">
@@ -126,6 +133,15 @@ const handleSelectActivity = (activity) => {
                 >
                     {isLoading ? "Regenerating..." : "Regenerate ↻"}
                 </button>
+
+                <div className="help-icon-container">
+                    <span className="help-icon">?</span>
+                    <div className="help-tooltip">
+                        This button generates a new itinerary based on your current selections.
+                        While your chosen activities remain, the AI may provide different timings
+                        or arrangements each time you regenerate.
+                    </div>
+                </div>
             </div>
 
             <SidePanel
