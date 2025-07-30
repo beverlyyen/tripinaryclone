@@ -28,7 +28,7 @@ app.use('/api/generate-itinerary', apiLimiter);
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const AI_MODEL = "mistralai/mixtral-8x7b-instruct";
+const AI_MODEL = "qwen/qwen3-coder:free";
 
 app.post('/api/generate-itinerary', async (req, res) => {
     const { selectedPlaces, destinationName, duration } = req.body;
