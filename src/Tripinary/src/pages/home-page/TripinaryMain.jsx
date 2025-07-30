@@ -26,7 +26,8 @@ const TripinaryMain = () => {
     updateDuration,
     setGeneratedItinerary,
     setIsLoadingItinerary,   
-    setItineraryError       
+    setItineraryError,
+    clearItineraryForm       
   } = useContext(ItineraryContext);
 
   const { pois, findPois, deletePois, isPoisEmpty, notification, isVisible } = useContext(PoisContext);
@@ -56,6 +57,7 @@ const TripinaryMain = () => {
       };
 
       deletePois(); 
+      clearItineraryForm();
 
       for (const category in categoryTypes) {
         if (categoryTypes.hasOwnProperty(category)) {
