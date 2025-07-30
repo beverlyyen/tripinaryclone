@@ -9,7 +9,9 @@ const app = express();
 const corsOptions = {
     origin: [
         'http://localhost:5173',
-        'https://your-vercel-frontend-url.vercel.app' // <-- add your deployed frontend URL here
+        'tripinary-one.vercel.app',
+        'tripinary-gj2jfk6d2-beverly-yens-projects.vercel.app'
+ // <-- add your deployed frontend URL here
     ],
     methods: ['POST', 'GET', 'OPTIONS'],
     optionsSuccessStatus: 200
