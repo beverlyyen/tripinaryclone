@@ -25,7 +25,7 @@ function Itinerary() {
         console.log("Clicked item:", item);
 
         if (item.place_id) {
-            setSelectedPlaceForPanel(item); // Pass the full item with place_id
+            setSelectedPlaceForPanel(item);
             setIsPanelOpen(true);
         } else {
             alert("This activity does not have a linked place_id.");
@@ -103,7 +103,6 @@ function Itinerary() {
                     ))}
                 </div>
             ) : (
-                // This block is for the *initial* state (no itinerary yet) or if generation resulted in empty itinerary
                 placesToItinerize.length > 0 ? (
                     <div className="itinerary-button">
                         <p>Please wait while your new itinerary is being generated...</p>
@@ -137,8 +136,7 @@ function Itinerary() {
                 <div className="help-icon-container">
                     <span className="help-icon">?</span>
                     <div className="help-tooltip">
-                        This button generates a new itinerary based on your current selections.
-                        While your chosen activities remain, the AI may provide different timings
+                        Note: while your chosen activities remain, the AI may provide different timings
                         or arrangements each time you regenerate.
                     </div>
                 </div>
