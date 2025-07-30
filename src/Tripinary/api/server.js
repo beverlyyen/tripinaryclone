@@ -5,14 +5,11 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: [
-        'http://localhost:5173',
-        'tripinary-one.vercel.app'
- // <-- add your deployed frontend URL here
-    ],
-    methods: ['POST', 'GET', 'OPTIONS'],
+    origin: 'http://localhost:5173',
+    methods: 'POST',
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
@@ -28,7 +25,7 @@ app.use('/api/generate-itinerary', apiLimiter);
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const AI_MODEL = "qwen/qwen3-coder:free";
+const AI_MODEL = "mistralai/mixtral-8x7b-instruct";
 
 app.post('/api/generate-itinerary', async (req, res) => {
     const { selectedPlaces, destinationName, duration } = req.body;
@@ -185,9 +182,4 @@ app.use((err, res) => {
     res.status(500).send('Something went wrong on the server!');
 });
 
-// Remove app.listen and error handler at the bottom
-// Instead, export the app for Vercel
-
 module.exports = app;
-// or, if using ESM: export default app;
-
