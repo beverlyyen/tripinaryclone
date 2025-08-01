@@ -93,7 +93,7 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
    * @param {string} query - Combined search string 
    */
   const fetchPlaceDetailsByQuery = (query) => {
-    setErrorMessage("");localhost
+    setErrorMessage("");
     fetch(`api/place-details?query=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
