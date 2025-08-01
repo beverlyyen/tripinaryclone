@@ -67,7 +67,7 @@ function Itinerary() {
     // send a POST request to itinerary
     try {
       const response = await fetch(
-        "http://localhost:5000/api/generate-itinerary",
+        "api/generate-itinerary",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
