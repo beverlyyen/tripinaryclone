@@ -24,10 +24,10 @@ const TripinaryMain = () => {
     itineraryForm,
     updateDestinationName,
     updateDuration,
+    clearItineraryForm,
     setGeneratedItinerary,
     setIsLoadingItinerary,   
-    setItineraryError,
-    clearItineraryForm       
+    setItineraryError       
   } = useContext(ItineraryContext);
 
   const { pois, findPois, deletePois, isPoisEmpty, notification, isVisible } = useContext(PoisContext);
@@ -38,6 +38,12 @@ const TripinaryMain = () => {
     }
   }, [isPoisEmpty]);
 
+  // Find all points of interest around selectedPlace.
+  // 1. Grab latitude & longitude of selectedPlace
+  // 2. Delete current pois list and clear current itineraryForm if occupied
+  // 3. For each category in categoryTypes, make API call to find places in that category
+  // 4. Store results to pois list
+  // 5. Update duration and type of time of user input.
   const handleSubmitDestination = (e) => {
     e.preventDefault();
 
@@ -45,8 +51,6 @@ const TripinaryMain = () => {
       alert("Please enter a city or increase the trip duration.");
       return;
     }
-
-    setClick(true);
     
     if (selectedPlace && selectedPlace.geometry) {
       setClick(true);
@@ -86,7 +90,7 @@ const TripinaryMain = () => {
     setItineraryError(null);
 
     try {
-      const response = await fetch("/api/generate-itinerary", {
+      const response = await fetch("http://localhost:5000/api/generate-itinerary", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,9 +153,7 @@ const TripinaryMain = () => {
               value={timeType}
               onChange={(e) => setTimeType(e.target.value)}
             >
-              <option value="hours">Hours</option>
               <option value="days">Days</option>
-              <option value="weeks">Weeks</option>
             </select>
           </div>
           <div className="itinerary-button">
@@ -175,7 +177,7 @@ const TripinaryMain = () => {
               transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
               style={{ overflow: "hidden", width: "100%" }}
             >
-              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destination.address} />
+              <Activity_Suggestions key={"activity_suggestions"} pois={pois} destination={itineraryForm.destination.name} />
             </motion.div>
           )}
         </AnimatePresence>
