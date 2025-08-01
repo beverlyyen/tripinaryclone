@@ -1,7 +1,7 @@
 //Import dependencies
 
 import express from 'express';
-import rateLimit from 'express-rate-limit';
+import rateLimit from 'express-rate-limit'; // Import rateLimit
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -22,8 +22,16 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
+// Define the API rate limiter
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes.'
+});
 
-app.use('/api/generate-itinerary');
+// Apply the rate limiter to the /api/generate-itinerary endpoint
+app.use('/api/generate-itinerary', apiLimiter);
+
 
 // Environment variables
 
