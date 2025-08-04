@@ -29,7 +29,7 @@ const apiKey = import.meta.env.OPENROUTER_API_KEY;
   //useEffect is used here in case the destination changes, it will rerun the function fetchTips
   useEffect(() => {
   if (destination) {
-    fetchTips(destination, apiKey).then((tip) => {
+    fetchTips(destination).then((tip) => {
       setTips(tip);
     });
   }

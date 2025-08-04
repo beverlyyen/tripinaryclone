@@ -1,6 +1,7 @@
+const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 // 🔌 Fetch travel tip from OpenRouter.
-export async function fetchTips(destination, apiKey) {
+export async function fetchTips(destination) {
     try {
       //Log the destination being queried 
       console.log("Sending AI request for:", destination)
