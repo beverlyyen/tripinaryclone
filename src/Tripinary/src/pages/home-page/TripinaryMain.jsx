@@ -182,6 +182,9 @@ const TripinaryMain = () => {
           )}
         </AnimatePresence>
       </div>
+      <p className="wait-message">
+        Please wait after pressing 'Generate Itinerary' — this may take a few seconds/minutes depending on your trip duration and selected activities!
+      </p>
       <div className="submit_area">
         <p>{itineraryForm.selectedPlaces.length} Destinations Selected</p>
         <button

@@ -110,6 +110,10 @@ function Itinerary() {
         Your Trip Itinerary for {itineraryForm.destination.name || "Your Destination"}
       </h1>
 
+         <p className="activity-note-message">
+        🔍 Want more details? Click on any activity to explore reviews, see its location on the map, and discover more helpful info!
+      </p>
+
       {/* display each day in an itinerary in day containers*/}
       {itineraryForm.isLoadingItinerary ? (
         <div className="loading-message-container">
