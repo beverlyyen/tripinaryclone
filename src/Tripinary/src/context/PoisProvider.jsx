@@ -29,7 +29,7 @@ function PoisProvider({ children }) {
   }, [pois]);
 
   const findNearbyPlaces = async (location, category, types) => {
-    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const API_KEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY
     const url = "https://places.googleapis.com/v1/places:searchNearby"
 
     const reqBody = {
