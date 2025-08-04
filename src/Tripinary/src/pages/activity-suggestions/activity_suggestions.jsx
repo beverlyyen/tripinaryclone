@@ -24,7 +24,7 @@ function Activity_Suggestions({ pois, destination }) {
 const [tips, setTips] = useState("");
 
 // Access to secure API key
-const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+const apiKey = import.meta.env.OPENROUTER_API_KEY;
 
   //useEffect is used here in case the destination changes, it will rerun the function fetchTips
   useEffect(() => {
