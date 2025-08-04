@@ -16,7 +16,7 @@ export async function fetchTips(destination) {
         },
         //This is the body of the API request
         body: JSON.stringify({
-          model: "openai/gpt-3.5-turbo",
+          model: "openai/qwen/qwen3-coder:free",
           messages: [
             {
               role: "user",
