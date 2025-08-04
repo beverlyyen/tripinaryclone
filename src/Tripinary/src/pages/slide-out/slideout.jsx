@@ -98,7 +98,7 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
 
   const fetchPlaceDetailsByQuery = (query) => {
     setErrorMessage(""); 
-    fetch(`http://localhost:5000/api/place-details?query=${encodeURIComponent(query)}`)
+    fetch(`/api/place-details?query=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
