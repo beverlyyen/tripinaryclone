@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/src/build/index.html"
+      "dest": "/build/index.html"
     }
   ]
 }

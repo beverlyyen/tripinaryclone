@@ -5,7 +5,7 @@ export async function fetchTips(destination) {
     try {
       //Log the destination being queried 
       console.log("Sending AI request for:", destination)
-  
+
       //Make a POST request to OpenRouter's chat completion endpoint 
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -28,19 +28,18 @@ export async function fetchTips(destination) {
       });
       //Parse the JSON response from the API 
       const data = await response.json();
-  
+
       //Use the console.log to get the response data for troubleshooting 
       console.log("AI response:", data);
-  
+
       //Extract the generated response 
       return data.choices?.[0]?.message?.content || "No tip available, but adventure awaits!";
     } catch (err) {
-  
+
       //Logs errors
       console.error("Error fetching tip:", err);
-  
+
       //Error message when failed to fetch any data from API 
       return "Oops! Couldn't fetch your travel tip.";
     }
   }
-  

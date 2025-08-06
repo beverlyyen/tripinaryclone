@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Activity_Carousel from "../../components/activity_carousel/activity_carousel.jsx";
 import "./activity_suggestions.css";
+import { fetchTips } from "./fetchTips.jsx";
 
 const getCategory = (cat) => {
   switch(cat) {
@@ -18,51 +19,18 @@ const getCategory = (cat) => {
 }
 
 function Activity_Suggestions({ pois, destination }) {
+const [tips, setTips] = useState("");
 
-  const [tips, setTips] = useState("");
+const apiKey = import.meta.env.OPENROUTER_API_KEY;
 
-const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
 
-// 🔌 Fetch travel tip from Qwen (OpenRouter)
-  async function fetchTips(destination) {
-    try {
-       console.log("Sending Qwen request for:", destination)
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,        // 🔐 Replace with your actual API key
-          "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:5173/"                 // 🌐 Required for free-tier users
-
-          
-        },
-         body: JSON.stringify({
-          model: "qwen/qwen3-coder:free",                     
-          messages: [
-            {
-              role: "user",
-              content: `Give a short one-liner helpful travel tip for someone visiting ${destination}. Keep it under 15 words, and make it witty, practical, or surprising.`
-            }
-          ]
-        })
-      });
-
-      const data = await response.json();
-       console.log("Qwen response:", data);
-      const tip = data.choices?.[0]?.message?.content;
-      setTips(tip || "No tip available, but adventure awaits!");
-    } catch (error) {
-      console.error("Failed to fetch tip:", error);
-      setTips("Oops! Couldn't fetch your travel tip.");
-    }
-  }
-
-  // 🚀 Run when destination changes
   useEffect(() => {
-    if (destination) {
-      fetchTips(destination);
-    }
-  }, [destination]);
+   if (destination) {
+    fetchTips(destination).then((tip) => {
+      setTips(tip);
+    });
+  }
+}, [destination]); 
 
   return (
     <div className="activity_suggestions">
