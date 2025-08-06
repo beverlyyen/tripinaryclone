@@ -1,0 +1,22 @@
+name: Deploy Tripinary to Vercel
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    
+    env: 
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to Vercel
+        run: |
+          npm install -g vercel
+          vercel --prod --yes --token=$VERCEL_TOKEN
