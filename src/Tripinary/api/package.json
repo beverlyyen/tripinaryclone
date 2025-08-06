@@ -2,6 +2,7 @@
 {
   "name": "node-backend-api",
   "version": "1.0.0",
+  "type": "module",
   "description": "My Node.js backend API",
   "main": "server.js", 
   "scripts": {
