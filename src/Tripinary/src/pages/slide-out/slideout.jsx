@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./slideout.css";
-import tripImage from "../../pages/slide-out/Tripinary.jpeg";
+import tripImage from "../../pages/slide-out/Tripinary.png";
 import magnifierIcon from "../../pages/slide-out/search.png";
 
 const APIKEY = import.meta.env.VITE_GOOGLE_PLACES_API_KEY;
