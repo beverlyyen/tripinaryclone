@@ -58,7 +58,6 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
     `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${APIKEY}`;
 
   const handleSearch = () => {
-     search
     const fullQuery = destinationName ? `${searchInputValue} ${destinationName}` : searchInputValue;
         updateMapSource(fullQuery);
     fetchPlaceDetailsByQuery(fullQuery);
