@@ -80,7 +80,6 @@ function SidePanel({ isOpen, searchQuery, onClose, place, destinationName }) {
         }
       })
       .catch((err) => {
-        console.error("Error fetching place details by query:", err);
         setPlaceDetails(null);
         setErrorMessage(`Error searching for "${query}". Please check your internet connection and try again.`);
       });
